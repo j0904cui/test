@@ -1,0 +1,70 @@
+<workflow-app xmlns='uri:oozie:workflow:0.5' name="import-extract-avro-${target_collection}-${target_dataset}">
+
+    <parameters>
+        <property>
+            <name>input_data_path</name>
+            <description>
+                 HDFS path pointing to the directory containing the input data. (Required)
+                 example: /path/to/data/
+                 type: string
+            </description>
+        </property>
+        <property>
+            <name>input_schema_path</name>
+            <description>
+                HDFS path pointing to the file containing the avro schema for data in input_data_path. (Required)
+                example: /path/to/schema/schemafile.avsc
+                type: string
+            </description>
+        </property>
+        <property>
+            <name>input_index</name>
+            <description>
+                The current index in the list of
+                input paths. Used to build "input_data_path".
+                example: 1
+                type: int
+            </description>
+        </property>
+    </parameters>
+
+    <global>
+        <job-tracker>${jobtracker}</job-tracker>
+        <name-node>${namenode}</name-node>
+    </global>
+
+
+    <start to="apply-schema-validation" />
+
+    <action name="apply-schema-validation">
+        <java>
+            <main-class>com.gfk.hyperlane.genericimport.AvroSchemaValidationAction</main-class>
+            <arg>${input_schema_path}/</arg>
+            <arg>${input_data_path}/</arg>
+        </java>
+        <ok to="copy-to-extraction-output" />
+        <error to="killOnError" />
+    </action>
+
+    <action name="copy-to-extraction-output">
+        <distcp xmlns="uri:oozie:distcp-action:0.2">
+            <prepare>
+                <delete path="${working_directory}/extraction_output/${input_index}/"/>
+            </prepare>
+            <arg>${input_data_path}/</arg>
+            <arg>${working_directory}/extraction_output/${input_index}/</arg>
+        </distcp>
+        <ok to="end" />
+        <error to="killOnError" />
+    </action>
+
+
+   <kill name="killOnError">
+        <message>Action failed, error
+            message[${wf:errorMessage(wf:lastErrorNode())}]
+        </message>
+    </kill>
+    <end name="end" />
+
+
+</workflow-app>

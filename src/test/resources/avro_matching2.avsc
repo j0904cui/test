@@ -1,0 +1,15 @@
+{
+	"type":"record",
+	"name":"pig_schema",
+	"fields":[
+		{"name":"hhid","type":["string","null"]},
+		{"name":"uid","type":["string","null"]},
+		{"name":"timestamp","type":["string","null"]},
+		{"name":"event_local_ts","type":"long"},
+		{"name":"referrer","type":["string","null"]},
+		{"name":"url","type":["string","null"],"default":"null"},
+		{"name":"extra","type":["string","null"],"default":"null"},
+		{"name":"process","type":["string","null"],"default":"null"},
+		{"name":"responsecode","type":["string","null"],"default":"null"}
+	]
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property>
+        <name>oozie.wf.application.path</name>
+        <value>@deployment_root@engines/generic-import/@version@/workflow.xml</value>
+    </property>
+    <property>
+        <name>jobtracker</name>
+        <value>@jobtracker@</value>
+    </property>
+    <property>
+        <name>namenode</name>
+        <value>@namenode@</value>
+    </property>
+
+    <!-- oozie configuration -->
+    <property>
+        <name>oozie.use.system.libpath</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>oozie.libpath</name>
+        <value>/user/hyperlane/share/oozie/datasets/v1/lib/,@deployment_root@engines/generic-import/@version@/lib</value>
+    </property>
+
+
+    <property>
+        <name>mapreduce.job.queuename</name>
+        <value>root.etl.default</value>
+    </property>
+
+
+    <!-- compress mapreduce map output -->
+    <property>
+        <name>mapreduce.map.output.compress</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>mapred.map.output.compress.codec</name>  
+        <value>org.apache.hadoop.io.compress.SnappyCodec</value>
+    </property>
+
+    <property>
+        <name>mapreduce.output.fileoutputformat.compress</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>mapreduce.output.fileoutputformat.compress.codec</name>
+        <value>org.apache.hadoop.io.compress.SnappyCodec</value>
+    </property>
+    
+
+    <!-- compress pig intermediate output -->
+    <property>
+        <name>pig.tmpfilecompression</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>pig.tmpfilecompression.codec</name>
+        <value>gz</value>
+    </property>
+
+
+</configuration>

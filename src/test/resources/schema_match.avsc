@@ -1,0 +1,10 @@
+{"type": "record","name": "pig_schema","fields": [
+{ "name": "a1", "type": ["string", "null"] , "default": "null" },
+{ "name": "a2", "type": ["string", "null"] , "default": "null" },
+{ "name": "a3", "type": ["string", "null"] , "default": "null" },
+{ "name": "a4", "type": ["string", "null"] , "default": "null" },
+{ "name": "a5", "type": ["string", "null"] , "default": "null" },
+{ "name": "a6", "type": ["string", "null"] , "default": "null" },
+{ "name": "a7", "type": ["string", "null"] , "default": "null" },
+{ "name": "a8", "type": ["int", "null"] , "default": "null" }
+]}

@@ -1,0 +1,133 @@
+<workflow-app xmlns='uri:oozie:workflow:0.5' name="import-extract-csv-${target_collection}-${target_dataset}">
+
+    <parameters>
+        <property>
+            <name>input_index</name>
+            <description>
+                The current index in the list of
+                input paths. Used to build "input_data_path".
+                example: 1
+                type: int
+            </description>
+        </property>
+        <property>
+            <name>input_data_path</name>
+            <description>
+                 HDFS path pointing to the directory containing the input data. (Required)
+                 example: /path/to/data/
+                 type: string
+            </description>
+        </property>
+        <property>
+            <name>input_schema_path</name>
+            <description>
+                HDFS path pointing to the file containing the avro schema for data in input_data_path. (Required)
+                example: /path/to/schema/schemafile.avsc
+                type: string
+            </description>
+        </property>
+        <property>
+            <name>max_ratio_invalid_valid</name>
+            <description>
+                Maximum ratio of invalid to valid records. Applies to csv and avro only. (Required)
+                example: 0.0
+                type: double
+            </description>
+        </property>
+    </parameters>
+
+    <global>
+        <job-tracker>${jobtracker}</job-tracker>
+        <name-node>${namenode}</name-node>
+        <configuration>
+            <property>
+                <name>mapred.mapper.new-api</name>
+                <value>true</value>
+            </property>
+            <property>
+                <name>mapred.reducer.new-api</name>
+                <value>true</value>
+            </property>
+            <property>
+                <name>mapred.output.key.class</name>
+                <value>org.apache.avro.generic.GenericRecord</value>
+            </property>
+            <property>
+                <name>mapred.output.value.class</name>
+                <value>org.apache.hadoop.io.NullWritable</value>
+            </property>
+            <property>
+                <name>mapreduce.map.class</name>
+                <value>com.gfk.hyperlane.genericimport.DelimitedTextToAvroMapper</value>
+            </property>
+            <property>
+                <name>mapred.reduce.tasks</name>
+                <value>0</value>
+            </property>
+            <property>
+                <name>mapreduce.job.inputformat.class</name>
+                <value>org.apache.hadoop.mapreduce.lib.input.TextInputFormat</value>
+            </property>
+            <property>
+                <name>mapreduce.job.outputformat.class</name>
+                <value>org.apache.avro.mapreduce.AvroKeyOutputFormat</value>
+            </property>
+        </configuration>
+    </global>
+
+    <start to="extract" />
+
+    <action name="extract">
+        <map-reduce>
+            <prepare>
+                <delete path="${working_directory}/extraction_output/${input_index}/"/>
+            </prepare>
+            <configuration>
+                <property>
+                    <name>field_delimiter</name>
+                    <value>${field_delimiter}</value>
+                </property>
+                <property>
+                    <name>mapreduce.input.fileinputformat.inputdir
+                    </name>
+                    <value>${input_data_path}/</value>
+                </property>
+                <property>
+                    <name>avro.schema.output.key</name>
+                    <value>${schemaPathToJson(concat(namenode,wf:conf("input_schema_path")))}</value>
+                </property>
+                <property>
+                    <name>input_schema_path</name>
+                    <value>${input_schema_path}</value>
+                </property>
+                <property>
+                    <name>mapreduce.output.fileoutputformat.outputdir
+                    </name>
+                    <value>${working_directory}/extraction_output/${input_index}/
+                    </value>
+                </property>
+            </configuration>
+        </map-reduce>
+        <ok to="check-validation-counters" />
+        <error to="killOnError" />
+    </action>
+
+    <action name="check-validation-counters">
+        <java>
+            <main-class>com.gfk.hyperlane.genericimport.CheckValidRecords</main-class>
+            <arg>${hadoop:counters("extract")["GENERIC_IMPORT"]["INVALID_RECORDS"]}</arg>
+            <arg>${hadoop:counters("extract")["GENERIC_IMPORT"]["VALID_RECORDS"]}</arg>
+            <arg>${max_ratio_invalid_valid}</arg>
+        </java>
+        <ok to="end" />
+        <error to="killOnError" />
+    </action>
+
+    <kill name="killOnError">
+        <message>Action failed, error
+            message[${wf:errorMessage(wf:lastErrorNode())}]
+        </message>
+    </kill>
+
+    <end name="end" />
+</workflow-app>

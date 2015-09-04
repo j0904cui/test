@@ -1,0 +1,7 @@
+<dataset-model>
+    <engine name="generic-import">
+         <input-dataset>input-files</input-dataset>
+         <output-dataset>output-dataset</output-dataset>
+         <description>The generic-import allows for importing data into Hyperlane datasets.</description>
+    </engine>
+</dataset-model>

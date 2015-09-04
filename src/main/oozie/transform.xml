@@ -1,0 +1,128 @@
+<workflow-app xmlns='uri:oozie:workflow:0.5' name="import-transform-${target_collection}-${target_dataset}">
+
+    <parameters>
+        <property>
+            <name>working_directory</name>
+            <description>
+              The name of the working directory. (Required)
+              example: /path/to/0000392-150513070730927-oozie-oozi-W
+              type: string
+            </description>
+        </property>
+        <property>
+            <name>transformation_script_path</name>
+            <value>NO_SCRIPT</value>
+            <description>
+                HDFS path pointing to the pig script used for transformation of the input data to the schema of the dataset. (Optional)
+                example: /path/to/script/script.pig
+                type: string
+            </description>
+        </property>
+        <property>
+            <name>target_collection</name>
+            <description>
+                The name of the target dataset collection. (Required)
+                example: hyperlane_de
+                type: string
+            </description>
+        </property>
+        <property>
+            <name>target_dataset</name>
+            <description>
+                The name of the target dataset. (Required)
+                example: ird
+                type: string
+            </description>
+        </property>
+        <property>
+            <name>target_version</name>
+            <description>
+                The schema version of the generated import result. (Required)
+                example: v1
+                type: string
+            </description>
+        </property>
+        <property>
+            <name>lower_date_filter</name>
+            <value>1</value>
+            <description>
+                Date to filter the input data (Lower bound). Can be applied in the transformation pig script (Optional)
+                example: 2014-11-01
+                type: string
+            </description>
+        </property>
+        <property>
+            <name>upper_date_filter</name>
+            <value>Z</value>
+            <description>
+                Date to filter the input data (Upper bound, exclusive). Can be applied in the transformation pig script (Optional)
+                example: 2014-12-01
+                type: string
+            </description>
+        </property>
+    </parameters>
+
+    <global>
+        <job-tracker>${jobtracker}</job-tracker>
+        <name-node>${namenode}</name-node>
+    </global>
+
+    <start to="check-transformation-script-defined" />
+
+    <decision name="check-transformation-script-defined">
+        <switch>
+            <case to="copy-to-tranformation-output">
+                ${transformation_script_path eq 'NO_SCRIPT'}
+            </case>
+            <default to="transform" />
+        </switch>
+    </decision>
+
+    <action name="transform">
+        <pig>
+            <prepare>
+                <delete path="${working_directory}/transformation_output/" />
+            </prepare>
+            <configuration>
+                <property>
+                    <name>pig.tmpfilecompression</name>
+                    <value>true</value>
+                </property>
+                <property>
+                    <name>pig.tmpfilecompression.codec</name>
+                    <value>gz</value>
+                </property>
+            </configuration>
+            <script>${transformation_script_path}</script>
+            <param>input_base_dir=${working_directory}/extraction_output/</param>
+            <param>lower_date_filter=${wf:conf("lower_date_filter")}</param>
+            <param>upper_date_filter=${wf:conf("upper_date_filter")}</param>
+            <param>output_dir=${working_directory}/transformation_output/</param>
+            <param>schema_file=/user/hive/warehouse/${target_collection}.db/${target_dataset}_staging_${target_version}/.metadata/schemas/1.avsc
+            </param>
+        </pig>
+        <ok to="end" />
+        <error to="killOnError" />
+    </action>
+
+    <action name="copy-to-tranformation-output">
+        <distcp xmlns="uri:oozie:distcp-action:0.2">
+            <prepare>
+                <delete path="${working_directory}/transformation_output/"/>
+            </prepare>
+            <arg>${working_directory}/extraction_output/</arg>
+            <arg>${working_directory}/transformation_output/</arg>
+        </distcp>
+        <ok to="end" />
+        <error to="killOnError" />
+    </action>
+
+    <kill name="killOnError">
+        <message>Action failed, error
+            message[${wf:errorMessage(wf:lastErrorNode())}]
+        </message>
+    </kill>
+
+    <end name="end" />
+
+</workflow-app>

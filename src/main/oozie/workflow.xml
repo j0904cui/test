@@ -1,0 +1,302 @@
+<workflow-app xmlns='uri:oozie:workflow:0.5' name="import-${target_collection}-${target_dataset}">
+
+   <parameters>
+        <property>
+            <name>target_collection</name>
+            <description>
+                The name of the target dataset collection. (Required)
+                example: hyperlane_de
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>target_dataset</name>
+            <description>
+                The name of the target dataset. (Required)
+                example: ird
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>target_version</name>
+            <description>
+                The schema version of the generated import result. (Required)
+                example: v1
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>input_root</name>
+            <description>
+                 HDFS path pointing to the directory containing the input data folders (see below). For use in coordinators, please refer to the Coordinator documentation below.(Required)
+                 example: /path/to/data
+                 type: string
+                 engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>input_data_path_1</name>
+            <description>
+                 HDFS path pointing to the directory containing the input data, relative to `input_root. Use input_data_path_2 ... input_data_path_n for providing multiple inputs to the transformation script. (Required)
+                 example: data
+                 type: string
+                 engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>input_data_path_2</name>
+            <value></value>
+            <description>
+                 HDFS path pointing to the directory containing the input data, relative to `input_root. Use input_data_path_2 ... input_data_path_n for providing multiple inputs to the transformation script. (Required)
+                 example: data
+                 type: string
+                 engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>input_data_path_3</name>
+            <value></value>
+            <description>
+                 HDFS path pointing to the directory containing the input data, relative to `input_root. Use input_data_path_2 ... input_data_path_n for providing multiple inputs to the transformation script. (Required)
+                 example: data
+                 type: string
+                 engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>input_data_path_4</name>
+            <value></value>
+            <description>
+                 HDFS path pointing to the directory containing the input data, relative to `input_root. Use input_data_path_2 ... input_data_path_n for providing multiple inputs to the transformation script. (Required)
+                 example: data
+                 type: string
+                 engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>input_data_path_5</name>
+            <value></value>
+            <description>
+                 HDFS path pointing to the directory containing the input data, relative to `input_root. Use input_data_path_2 ... input_data_path_n for providing multiple inputs to the transformation script. (Required)
+                 example: data
+                 type: string
+                 engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>input_schema_path_1</name>
+            <description>
+                HDFS path pointing to the file containing the avro schema for data in input_data_path_1. For each input_data_path_[i] there must be a parameter input_schema_path_[i]. (Required)
+                example: /path/to/schema/schemafile.avsc
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+       <property>
+            <name>input_schema_path_2</name>
+            <value></value>
+            <description>
+                HDFS path pointing to the file containing the avro schema for data in input_data_path_1. For each input_data_path_[i] there must be a parameter input_schema_path_[i]. (Required)
+                example: /path/to/schema/schemafile.avsc
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+       <property>
+            <name>input_schema_path_3</name>
+            <value></value>
+            <description>
+                HDFS path pointing to the file containing the avro schema for data in input_data_path_1. For each input_data_path_[i] there must be a parameter input_schema_path_[i]. (Required)
+                example: /path/to/schema/schemafile.avsc
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+       <property>
+            <name>input_schema_path_4</name>
+            <value></value>
+            <description>
+                HDFS path pointing to the file containing the avro schema for data in input_data_path_1. For each input_data_path_[i] there must be a parameter input_schema_path_[i]. (Required)
+                example: /path/to/schema/schemafile.avsc
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+       <property>
+            <name>input_schema_path_5</name>
+            <value></value>
+            <description>
+                HDFS path pointing to the file containing the avro schema for data in input_data_path_1. For each input_data_path_[i] there must be a parameter input_schema_path_[i]. (Required)
+                example: /path/to/schema/schemafile.avsc
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>input_type</name>
+            <description>
+                Format of the input data, one of avro, parquet, csv. (Required)
+                example: avro
+                type: enum
+                engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>max_ratio_invalid_valid</name>
+            <description>
+                Maximum ratio of invalid to valid records. Applies to csv only. (Required)
+                example: 0.0
+                type: double
+                engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>transformation_script_path</name>
+            <value></value>
+            <description>
+                HDFS path pointing to the pig script used for transformation of the input data to the schema of the dataset. (Optional)
+                example: /path/to/script/script.pig
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>field_delimiter</name>
+            <value>\t</value>
+            <description>
+                Character used for splitting input files containing delimited text. Default is \t. Required for input type csv. (Optional)
+                example: ,
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>provided_slice_fields</name>
+            <value></value>
+            <description>
+                For datasets with provided slice fields (e.g. for aTRACKtive), comma-separated list of key-value pairs. (Optional)
+                example: slice_start:1970-01-01
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>lower_date_filter</name>
+            <value>1</value>
+            <description>
+                Date to filter the input data (Lower bound). Can be applied in the transformation pig script. The default value is 'Z', which is probably not meaningful. (Optional)
+                example: 2014-11-01
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>upper_date_filter</name>
+            <value>Z</value>
+            <description>
+                Date to filter the input data (Upper bound, exclusive). Can be applied in the transformation pig script. The default value is 'Z', which is probably not meaningful.(Optional)
+                example: 2014-12-01
+                type: string
+                engines=generic-import
+            </description>
+        </property>
+
+    </parameters>
+
+     <global>
+        <job-tracker>${jobtracker}</job-tracker>
+        <name-node>${namenode}</name-node>
+    </global>
+
+    <start to="extract"/>
+
+    <action name="extract">
+        <sub-workflow>
+            <app-path>${wf:appPath()}/../extract-loop.xml</app-path>
+            <propagate-configuration />
+            <configuration>
+                <property>
+                    <name>input_index</name>
+                    <value>1</value>
+                </property>
+                <property>
+                    <name>working_directory</name>
+                    <value>${wf:appPath()}/../_work_tmp/${wf:id()}/</value>
+                </property>
+            </configuration>
+        </sub-workflow>
+        <ok to="transform"/>
+        <error to="killOnError" />
+    </action>
+
+
+    <action name="transform">
+        <sub-workflow>
+            <app-path>${wf:appPath()}/../transform.xml</app-path>
+            <propagate-configuration />
+            <configuration>
+                <property>
+                    <name>working_directory</name>
+                    <value>${wf:appPath()}/../_work_tmp/${wf:id()}/</value>
+                </property>
+            </configuration>
+        </sub-workflow>
+        <ok to="load"/>
+        <error to="killOnError" />
+    </action>
+
+
+    <action name="load">
+        <sub-workflow>
+            <app-path>/user/hyperlane/share/oozie/datasets/v1/workflow/workflow-load-dataset.xml</app-path>
+            <propagate-configuration />
+            <configuration>
+                <property>
+                    <name>input_path</name>
+                    <value>${wf:appPath()}/../_work_tmp/${wf:id()}/transformation_output/</value>
+                </property>
+                <property>
+                    <name>collection_name</name>
+                    <value>${target_collection}</value>
+                </property>
+                <property>
+                    <name>dataset_name</name>
+                    <value>${target_dataset}</value>
+                </property>
+                <property>
+                    <name>schema_version</name>
+                    <value>${target_version}</value>
+                </property>
+                <property>
+                    <name>slice_field_values</name>
+                    <value>${replaceAll(wf:conf("provided_slice_fields"),':', '=')}</value>
+                </property>
+            </configuration>
+        </sub-workflow>
+        <ok to="delete-working-directory"/>
+        <error to="killOnError" />
+    </action>
+
+    <action name="delete-working-directory">
+        <fs>
+            <delete path="${wf:appPath()}/../_work_tmp/${wf:id()}" />
+        </fs>
+
+        <ok to="end"/>
+        <error to="killOnError" />
+    </action>
+
+    <kill name="killOnError">
+        <message>
+            Action failed, error
+            message[${wf:errorMessage(wf:lastErrorNode())}]
+        </message>
+    </kill>
+
+
+    <end name="end"/>
+
+</workflow-app>

@@ -1,0 +1,215 @@
+<workflow-app xmlns='uri:oozie:workflow:0.5' name="import-extract-loop-${input_index}-${target_collection}-${target_dataset}">
+
+    <parameters>
+        <property>
+            <name>input_index</name>
+            <description>
+                The current index in the list of
+                input paths. Used to build "input_data_path".
+                example: 1
+                type: int
+            </description>
+        </property>
+        <property>
+            <name>input_type</name>
+            <description>
+                Format of the input data, one of avro, parquet, csv. (Required)
+                example: avro
+                type: enum
+            </description>
+        </property>
+        <property>
+            <name>working_directory</name>
+            <description>
+              The name of the working directory. (Required)
+              example: /path/to/0000392-150513070730927-oozie-oozi-W
+              type: string
+            </description>
+        </property>
+    </parameters>
+
+    <start to="check-input-file-is-configured" />
+
+    <decision name="check-input-file-is-configured">
+        <switch>
+            <case to="check-input-data-path">
+                ${not empty wf:conf(concat("input_data_path_", input_index))}
+            </case>
+            <default to="end" />
+        </switch>
+    </decision>
+
+    <decision name="check-input-data-path">
+        <switch>
+            <case to="check-input-schema-path-is-configured">
+                ${fs:exists(concat(concat(input_root, "/"), wf:conf(concat("input_data_path_", input_index))))}
+            </case>
+            <default to="invalidInputPath" />
+        </switch>
+    </decision>
+
+    <decision name="check-input-schema-path-is-configured">
+        <switch>
+            <case to="check-input-schema-path">
+                ${not empty wf:conf(concat("input_schema_path_", input_index))}
+            </case>
+            <default to="invalidInputSchemaPath" />
+        </switch>
+    </decision>
+
+
+    <decision name="check-input-schema-path">
+        <switch>
+            <case to="select-extraction-type">
+                ${fs:exists(wf:conf(concat("input_schema_path_", input_index)))}
+            </case>
+            <default to="invalidInputSchemaPath" />
+        </switch>
+    </decision>
+
+    <decision name="select-extraction-type">
+        <switch>
+            <case to="extract-csv-subworkflow">
+                ${input_type eq 'csv'}
+            </case>
+            <case to="extract-avro-subworkflow">
+                ${input_type eq 'avro'}
+            </case>
+            <case to="extract-parquet-subworkflow">
+                ${input_type eq 'parquet'}
+            </case>
+            <default to="unsupportedInputType" />
+        </switch>
+    </decision>
+
+    <action name="extract-csv-subworkflow">
+        <sub-workflow>
+            <app-path>${wf:appPath()}/../extract-csv.xml</app-path>
+            <propagate-configuration />
+            <configuration>
+                <property>
+                    <name>input_data_path</name>
+                    <value>${input_root}/${wf:conf(concat("input_data_path_", input_index))}</value>
+                </property>
+                <property>
+                    <name>input_schema_path</name>
+                    <value>${wf:conf(concat("input_schema_path_", input_index))}</value>
+                </property>
+                <property>
+                    <name>output_path</name>
+                    <value>${working_directory}/extraction_output/${input_index}</value>
+                </property>
+                <property>
+                    <name>max_invalid_records</name>
+                    <value>0</value>
+                </property>
+            </configuration>
+        </sub-workflow>
+        <ok to="check-next-input-file-is-configured" />
+        <error to="killOnError" />
+    </action>
+
+    <action name="extract-avro-subworkflow">
+        <sub-workflow>
+            <app-path>${wf:appPath()}/../extract-avro.xml</app-path>
+            <propagate-configuration />
+            <configuration>
+                <property>
+                    <name>input_data_path</name>
+                    <value>${input_root}/${wf:conf(concat("input_data_path_", input_index))}</value>
+                </property>
+                <property>
+                    <name>input_schema_path</name>
+                    <value>${wf:conf(concat("input_schema_path_", input_index))}</value>
+                </property>
+                <property>
+                    <name>output_path</name>
+                    <value>${working_directory}/extraction_output/${input_index}</value>
+                </property>
+            </configuration>
+        </sub-workflow>
+        <ok to="check-next-input-file-is-configured" />
+        <error to="killOnError" />
+    </action>
+
+    <action name="extract-parquet-subworkflow">
+        <sub-workflow>
+            <app-path>${wf:appPath()}/../extract-parquet.xml</app-path>
+            <propagate-configuration />
+            <configuration>
+                <property>
+                    <name>input_data_path</name>
+                    <value>${input_root}/${wf:conf(concat("input_data_path_", input_index))}</value>
+                </property>
+                <property>
+                    <name>input_schema_path</name>
+                    <value>${wf:conf(concat("input_schema_path_", input_index))}</value>
+                </property>
+                <property>
+                    <name>output_path</name>
+                    <value>${working_directory}/extraction_output/${input_index}</value>
+                </property>
+            </configuration>
+        </sub-workflow>
+        <ok to="check-next-input-file-is-configured" />
+        <error to="killOnError" />
+    </action>
+
+
+    <decision name="check-next-input-file-is-configured">
+        <switch>
+            <case to="loop">
+                ${not empty wf:conf(concat("input_data_path_", input_index + 1))}
+            </case>
+            <default to="end" />
+        </switch>
+    </decision>
+
+
+    <action name="loop">
+        <sub-workflow>
+            <app-path>${wf:appPath()}/../extract-loop.xml</app-path>
+            <propagate-configuration />
+            <configuration>
+                <property>
+                    <name>input_index</name>
+                    <value>${input_index + 1}</value>
+                </property>
+            </configuration>
+        </sub-workflow>
+        <ok to="end" />
+        <error to="killOnError" />
+    </action>
+
+    <kill name="killOnError">
+        <message>Action failed, error
+            message[${wf:errorMessage(wf:lastErrorNode())}]
+        </message>
+    </kill>
+
+    <kill name="invalidInputPath">
+        <message>
+            Extraction input path (input_data_path)
+            does not exist: ${input_root/wf:conf(concat("input_data_path_", input_index))}.
+        </message>
+    </kill>
+
+    <kill name="invalidInputSchemaPath">
+        <message>
+            Input schema path (input_schema_path)
+            does not exist: ${wf:conf(concat("input_schema_path_",
+            input_index))}.
+        </message>
+    </kill>
+
+
+    <kill name="unsupportedInputType">
+        <message>
+            Do not know how to validate input of
+            type ${input_type}.
+        </message>
+    </kill>
+
+    <end name="end" />
+
+</workflow-app>

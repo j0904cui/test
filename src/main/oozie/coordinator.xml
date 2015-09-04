@@ -1,0 +1,57 @@
+<coordinator-app name="generic-coordinator" frequency="${coord:days(1)}" start="${start_coordinator}" end="${end_coordinator}" timezone="UTC" xmlns="uri:oozie:coordinator:0.4">
+
+    <parameters>
+        <property>
+            <name>lower_filter_days</name>
+            <description>
+                Will be used to compute `lower_date_filter`
+                example: -2
+                type: numeric
+                engines=generic-import
+            </description>
+        </property>
+        <property>
+            <name>upper_filter_days</name>
+            <description>
+                Will be used to compute `upper_date_filter`
+                example: -1
+                type: numeric
+                engines=generic-import
+            </description>
+        </property>       
+    </parameters>
+
+    <datasets>
+        <dataset name="input" frequency="${coord:days(1)}" initial-instance="1970-01-01T00:00Z" timezone="UTC">
+            <uri-template>
+                @namenode@${input_root}/${YEAR}/${MONTH}/${DAY}
+            </uri-template>
+        </dataset>
+    </datasets>
+
+    <input-events>
+        <data-in name="input_event" dataset="input">
+            <instance>${coord:current(-1)}</instance>
+        </data-in>
+    </input-events>
+
+    <action>
+        <workflow>
+            <app-path>@deployment_root@engines/generic-import/@version@/workflow.xml</app-path>
+            <configuration>
+                <property>
+                    <name>input_root</name>
+                    <value>${coord:dataIn('input_event')}</value>
+                </property>
+                <property>
+                    <name>lower_date_filter</name>
+                    <value>${coord:formatTime(coord:dateOffset(coord:nominalTime(), lower_filter_days, 'DAY'), "yyyy-MM-dd")}</value>
+                </property>
+                <property>
+                    <name>upper_date_filter</name>
+                    <value>${coord:formatTime(coord:dateOffset(coord:nominalTime(), upper_filter_days, 'DAY'), "yyyy-MM-dd")}</value>
+                </property>
+            </configuration>
+        </workflow>
+    </action>
+</coordinator-app>
