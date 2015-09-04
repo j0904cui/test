@@ -1,101 +1,91 @@
-apply plugin: 'eclipse'
-apply plugin: 'java'
-
-version = '0.1.0-SNAPSHOT'
-group = 'com.gfk.etl'
-
-description = " LEOtrace/Hyperlane Unified  Dataset (ULD) Transfer"
-
-sourceCompatibility = '1.7'
-targetCompatibility = '1.7'
-
-repositories { 
-    mavenCentral()
-    maven { url "https://repository.cloudera.com/artifactory/cloudera-repos/" }
-    maven { url "http://62.48.79.36:2222/artifactory/repo/" }
-    mavenLocal()
+plugins {
+    id 'net.researchgate.release' version '2.0.2'
 }
- 
+
+group = 'com.gfk.hyperlane.oozie'
+
+apply from: 'http://78.137.98.66:8081/nexus/service/local/repositories/config/content/config/init/1.2/init-1.2.gradle'
+
+repositories {
+    jcenter()
+    maven { url "https://repository.cloudera.com/artifactory/cloudera-repos/" }
+}
+
 configurations {
-    testCompile {
-        all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    udf {
+        transitive = false
     }
+}
+
+task zipDist(type: Zip) {
+    from 'build/oozie'
+}
+
+artifacts {
+    archives jar
+    archives zipDist
 }
 
 dependencies {
-    /*
-    compile 'joda-time:joda-time:2.1'
-    compile 'com.nurago.common:common-pig-functions-cdh4:1.3.2'
-    compile  ('com.sun.jersey:jersey-client:1.8')  {force = true}
-    compile 'com.nurago.etl:etl-common-cdh4:1.3.2'
-    compile ('com.nurago.import:oozie-dataimport-core-cdh4:1.6.1') { exclude group: 'com.nurago.monitoring' }
+    compile group: 'org.apache.hadoop', name: 'hadoop-client', version:'2.3.0-cdh5.1.0'
+    compile group: 'org.apache.hive.hcatalog', name: 'hive-webhcat-java-client', version: '0.12.0-cdh5.1.0'
+    compile group: 'org.apache.hive.hcatalog', name: 'hive-hcatalog', version: '0.12.0-cdh5.1.0'
+    compile group: 'org.apache.hive.hcatalog', name: 'hive-hcatalog-core', version: '0.12.0-cdh5.1.0'
+    compile group: 'org.apache.hive.hcatalog', name: 'hive-hcatalog-pig-adapter', version: '0.12.0-cdh5.1.0'
 
-    compile ('com.twitter.elephantbird:elephant-bird-hadoop-compat:4.5'){ exclude group : 'org.slf4j' }
-    compile 'com.google.guava:guava:11.0.2'
-    compile 'com.googlecode.json-simple:json-simple:1.1'
-    compile 'com.nurago.common:common-pig-functions-cdh4:1.3.2:hadoop@zip'
-    compile 'com.twitter.elephantbird:elephant-bird-core:4.5'
-    compile 'com.twitter.elephantbird:elephant-bird-pig:4.5'
+    compile group: 'org.apache.avro', name: 'avro', version:'1.7.6'
 
-    testCompile 'org.codehaus.jackson:jackson-mapper-asl:1.9.7'
-    testCompile   ('com.sun.jersey:jersey-client:1.8')  {force = true}
-    testCompile ('com.nurago.common:common-test-utils:0.0.1');
-    testCompile ('com.twitter.elephantbird:elephant-bird-core:4.5') { exclude group : 'org.slf4j' }
-    testCompile ('com.twitter.elephantbird:elephant-bird-pig:4.5') { exclude group : 'org.slf4j' }
-    testCompile ('com.twitter:parquet-column:1.2.5') { exclude group : 'org.slf4j' }
-    testCompile ('com.twitter:parquet-common:1.2.5') { exclude group : 'org.slf4j' }
-    testCompile ('com.twitter:parquet-encoding:1.2.5') { exclude group : 'org.slf4j' }
-    testCompile ('com.twitter:parquet-format:1.0.0') { exclude group : 'org.slf4j' }
-    testCompile ('com.twitter:parquet-generator:1.2.5') { exclude group : 'org.slf4j' }
-    testCompile ('com.twitter:parquet-hadoop:1.2.5') { exclude group : 'org.slf4j' }
-    testCompile ('com.twitter:parquet-pig:1.2.5') { exclude group : 'org.slf4j' }
-    */
+    compile group: 'org.apache.hadoop', name: 'hadoop-common', version: '2.3.0-cdh5.1.0'
+    compile group: 'org.apache.pig', name: 'pig', version: '0.12.0-cdh5.1.0'
 
-    testCompile group: 'org.apache.hadoop', name: 'hadoop-common', version:'2.0.0-cdh4.7.0'
-    testCompile group: 'org.apache.hadoop', name: 'hadoop-hdfs', version:'2.0.0-cdh4.7.0'
-    testCompile group: 'org.apache.hadoop', name: 'hadoop-core', version: '2.0.0-mr1-cdh4.7.0'
-    testCompile group: 'org.apache.hadoop', name: 'hadoop-minicluster', version: '2.0.0-mr1-cdh4.7.0'
-    testCompile group: 'org.apache.oozie', name: 'oozie-core', version: '3.3.2-cdh4.7.0'
-    testCompile group: 'org.apache.oozie', name: 'oozie-sharelib-pig', version: '3.3.2-cdh4.7.0'
-	testCompile group: 'org.apache.oozie', name: 'oozie-sharelib-streaming', version: '3.3.2-cdh4.7.0'
-    testCompile group: 'org.apache.oozie', name: 'oozie-client', version: '3.3.2-cdh4.7.0'
-    testCompile group: 'org.apache.pig', name: 'pig', version: '0.11.0-cdh4.7.0'
-    testCompile group: 'org.apache.pig', name: 'pigunit', version: '0.11.0-cdh4.7.0'
+    compile group: 'com.twitter', name: 'parquet-hive-0.12-binding', version: '1.5.0'
+    compile group: 'com.twitter', name: 'parquet-hive-binding-bundle', version: '1.5.0'
+    compile group: 'com.twitter', name: 'parquet-hive-binding-factory', version: '1.5.0'
+    compile group: 'com.twitter', name: 'parquet-hive-storage-handler', version: '1.5.0'
+    compile group: 'com.twitter', name: 'parquet-hive-bundle', version: '1.5.0'
+    compile group: 'com.twitter', name: 'parquet-avro', version: '1.5.0'
+    compile group: 'org.kitesdk', name: 'kite-data-core', version: '1.0.0'
+    compile group: 'org.apache.avro', name: 'avro-mapred', version: '1.7.5-cdh5.1.0'
+ 	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version: '2.3.2'
+ compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.3.2'
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.3.2'
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.3.2'
+  compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-base', version: '2.3.2'
+  compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.3.2'
+  compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.15'
+ compile group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version: '2.15'
+  compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.15'
+ 	udf group: 'org.apache.pig', name: 'piggybank', version: '0.12.0'
 }
 
-test {
-    forkEvery = 1;
-    jvmArgs = ['-ea', '-Xmx512m']
-    exclude "**/FullTestSuite*"
+task copyOozieConfig {
+        description 'Copies engine workflow definition and jars to build/oozie'
+
+        doLast {
+            copy {
+                from "src/main/oozie/"
+                into "build/oozie/"
+            }
+
+            copy {
+                from configurations.runtime
+                into "build/oozie/lib/"
+            }
+
+            copy {
+                from configurations.udf
+                into "build/oozie/lib/"
+            }
+
+            copy {
+                from "build/libs/"
+                into "build/oozie/lib/"
+            }
+        }
 }
 
- 
+copyOozieConfig.dependsOn(":jar")
 
-task copyOozieArtifacts {
-
-    description 'Copies oozie definitions, scripts and libraries to build/oozie'
-
-    doLast {     
-        copy {
-            from "src/main/oozie/"
-            into "build/oozie/"
-        }
-
-        copy {
-            from "src/main/pig"
-            into "build/oozie/pig"
-        }
-
-        copy {
-            from "src/main/sh"
-            into "build/oozie/sh"
-        }
-
-        copy {
-            from "build/libs"
-            into "build/oozie/lib"
-        }
-    }
-}
-
-copyOozieArtifacts.dependsOn(":jar")
+build.dependsOn zipDist
+build.dependsOn copyOozieConfig
+zipDist.dependsOn copyOozieConfig
