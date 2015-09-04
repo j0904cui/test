@@ -1,0 +1,168 @@
+{
+  "id": 45,
+  "name": "Generic Import",
+  "description": "Template description here",
+  "autoLayout": false,
+  "shapes": [
+    {
+      "type": "rectangle",
+      "x": 220.5,
+      "y": 0.5,
+      "id": 1100,
+      "configuration": [
+        {
+            "name": "target_collection",
+            "type": "string",
+            "exampleValue": "hyperlane_de",
+            "description": "The name of the target dataset collection."
+        },
+        {
+            "name": "target_dataset",
+            "type": "string",
+            "exampleValue": "ird",
+            "description": "The name of the target dataset."
+        },
+        {
+            "name": "target_version",
+            "type": "string",
+            "exampleValue": "v1",
+            "description": "The schema version of the generated import result."
+        },
+        {
+            "name": "input_data_path_1",
+            "type": "string",
+            "exampleValue": "/path/to/data/",
+            "description": "HDFS path pointing to the directory containing the input data. Use input_data_path_2 ... input_data_path_n for providing multiple inputs to the transformation script."
+        },
+        {
+            "name": "input_data_path_2",
+            "type": "string",
+            "exampleValue": "/path/to/data/",
+            "description": "HDFS path pointing to the directory containing the input data. Use input_data_path_2 ... input_data_path_n for providing multiple inputs to the transformation script."
+        },
+        {
+            "name": "input_data_path_3",
+            "type": "string",
+            "exampleValue": "/path/to/data/",
+            "description": "HDFS path pointing to the directory containing the input data. Use input_data_path_2 ... input_data_path_n for providing multiple inputs to the transformation script."
+        },
+        {
+            "name": "input_data_path_4",
+            "type": "string",
+            "exampleValue": "/path/to/data/",
+            "description": "HDFS path pointing to the directory containing the input data. Use input_data_path_2 ... input_data_path_n for providing multiple inputs to the transformation script."
+        },
+        {
+            "name": "input_data_path_5",
+            "type": "string",
+            "exampleValue": "/path/to/data/",
+            "description": "HDFS path pointing to the directory containing the input data. Use input_data_path_2 ... input_data_path_n for providing multiple inputs to the transformation script."
+        },
+        {
+            "name": "input_schema_path_1",
+            "type": "string",
+            "exampleValue": "/path/to/schema/schemafile.avsc",
+            "description": "HDFS path pointing to the file containing the avro schema for data in input_data_path_1. For each input_data_path_[i] there must be a parameter input_schema_path_[i]."
+        },
+        {
+            "name": "input_schema_path_2",
+            "type": "string",
+            "exampleValue": "/path/to/schema/schemafile.avsc",
+            "description": "HDFS path pointing to the file containing the avro schema for data in input_data_path_2. For each input_data_path_[i] there must be a parameter input_schema_path_[i]."
+        },
+        {
+            "name": "input_schema_path_3",
+            "type": "string",
+            "exampleValue": "/path/to/schema/schemafile.avsc",
+            "description": "HDFS path pointing to the file containing the avro schema for data in input_data_path_3. For each input_data_path_[i] there must be a parameter input_schema_path_[i]."
+        },
+        {
+            "name": "input_schema_path_4",
+            "type": "string",
+            "exampleValue": "/path/to/schema/schemafile.avsc",
+            "description": "HDFS path pointing to the file containing the avro schema for data in input_data_path_4. For each input_data_path_[i] there must be a parameter input_schema_path_[i]."
+        },
+        {
+            "name": "input_schema_path_5",
+            "type": "string",
+            "exampleValue": "/path/to/schema/schemafile.avsc",
+            "description": "HDFS path pointing to the file containing the avro schema for data in input_data_path_5. For each input_data_path_[i] there must be a parameter input_schema_path_[i]."
+        },
+        {
+            "name": "input_type",
+            "type": "enum",
+            "exampleValue": "avro",
+            "description": "Format of the input data, one of avro, parquet, csv."
+        },
+        {
+            "name": "max_ratio_invalid_valid",
+            "type": "double",
+            "exampleValue": "0.0",
+            "description": "Maximum ratio of invalid to valid records."
+        },
+        {
+            "name": "transformation_script_path",
+            "type": "string",
+            "exampleValue": "/path/to/script/script.pig",
+            "description": "HDFS path pointing to the pig script used for transformation of the input data to the schema of the dataset."
+        },
+        {
+            "name": "field_delimiter",
+            "type": "string",
+            "exampleValue": ",",
+            "description": "Character used for splitting input files containing delimited text. Default is \t. Required for input type csv."
+        },
+        {
+            "name": "provided_slice_fields",
+            "type": "string",
+            "exampleValue": "slice_start:1970-01-01",
+            "description": "For datasets with provided slice fields (e.g. for aTRACKtive), comma-separated list of key-value pairs."
+        },
+        {
+            "name": "lower_date_filter",
+            "type": "string",
+            "exampleValue": "2014-11-01",
+            "description": "Date to filter the input data (Lower bound). Can be applied in the transformation pig script. The default value is '1', which is probably not meaningful."
+        },
+        {
+            "name": "upper_date_filter",
+            "type": "string",
+            "exampleValue": "2014-12-01",
+            "description": "Date to filter the input data (Upper bound, exclusive). Can be applied in the transformation pig script. The default value is 'Z', which is probably not meaningful."
+        }
+    ],
+    "name": "generic-import",
+    "version": "1.0",
+    "versionLink": "https://stash.gfk.com/projects/GO/repos/generic-import/browse",
+    "description": "Imports data into Hyperlane"
+    },
+    {
+      "type": "circle",
+      "x": 350.5,
+      "y": 0.5,
+      "id": 2100,
+      "configuration": [],
+      "name": "Hyperlane Dataset"
+    },
+    {
+      "type": "circle",
+      "x": 90.5,
+      "y": 0.5,
+      "id": 3100,
+      "configuration": [],
+      "name": "Input"
+    }
+  ],
+  "connections": [
+    {
+      "from": 1100,
+      "to": 2100
+    },
+    {
+      "from": 3100,
+      "to": 1100
+    }
+  ],
+  "oozieXML": "/user/hyperlane/engines/generic-import/0.1.1/workflow.xml",
+  "inactive": false
+}
