@@ -1,0 +1,512 @@
+{
+  "type" : "record",
+  "name" : "UnifiedLEOtraceDatasetRecord",
+  "namespace" : "com.gfk",
+  "fields" : [ {
+    "name" : "is_imputed",
+    "type" : [ "null", "boolean" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "panel_id",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) ID of the panel.",
+    "default" : null
+  }, {
+    "name" : "panel_household_id",
+    "type" : [ "null", "string" ],
+    "doc" : "The ID of the household within the panel."
+  }, {
+    "name" : "panel_household_person_id",
+    "type" : [ "null", "string" ],
+    "doc" : "The ID of the person within the panel household."
+  }, {
+    "name" : "internal_household_id",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) internal household ID.",
+    "default" : null
+  }, {
+    "name" : "device_type_name",
+    "type" : [ "null", "string" ],
+    "doc" : "The device type name. One of {PC, Smartphone, Tablet}"
+  }, {
+    "name" : "device_operating_system_name",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) device operating system name.",
+    "default" : null
+  }, {
+    "name" : "device_operating_system_version",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) device operating system version.",
+    "default" : null
+  }, {
+    "name" : "device_manufacturer_name",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) device manufacturer name",
+    "default" : null
+  }, {
+    "name" : "device_model_name",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) device model name.",
+    "default" : null
+  }, {
+    "name" : "device_id",
+    "type" : [ "null", "string" ],
+    "doc" : "The device ID. The meter's installation ID in case of PC data. One of various identifiers in case of Smartphone or Tablet data."
+  }, {
+    "name" : "advertising_id",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) advertising ID.",
+    "default" : null
+  }, {
+    "name" : "meter_version",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) meter version.",
+    "default" : null
+  }, {
+    "name" : "recording_timestamp",
+    "type" : [ "null", "long" ],
+    "doc" : "The recording timestamp (milliseconds since 1970-01-01T00:00:00.000Z).",
+    "default" : null
+  }, {
+    "name" : "recording_date",
+    "type" : [ "null", "string" ],
+    "doc" : "The recording date (UTC).",
+    "default" : null
+  }, {
+    "name" : "recording_datetime",
+    "type" : [ "null", "string" ],
+    "doc" : "The recording date-time (UTC).",
+    "default" : null
+  }, {
+    "name" : "local_recording_date",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) local recording date.",
+    "default" : null
+  }, {
+    "name" : "local_recording_datetime",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) local recording date-time.",
+    "default" : null
+  }, {
+    "name" : "local_recording_timezone",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) local recording timezone.",
+    "default" : null
+  }, {
+    "name" : "start_timestamp",
+    "type" : [ "null", "long" ],
+    "doc" : "The (optional) start timestamp (milliseconds since 1970-01-01T00:00:00.000Z).",
+    "default" : null
+  }, {
+    "name" : "start_datetime",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) start date-time (UTC).",
+    "default" : null
+  }, {
+    "name" : "local_start_datetime",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) local start date-time.",
+    "default" : null
+  }, {
+    "name" : "local_start_timezone",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) local start timezone.",
+    "default" : null
+  }, {
+    "name" : "end_timestamp",
+    "type" : [ "null", "long" ],
+    "doc" : "The (optional) end timestamp (milliseconds since 1970-01-01T00:00:00.000Z).",
+    "default" : null
+  }, {
+    "name" : "end_date",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) end date (UTC).",
+    "default" : null
+  }, {
+    "name" : "end_datetime",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) end date-time (UTC).",
+    "default" : null
+  }, {
+    "name" : "local_end_date",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) local end date.",
+    "default" : null
+  }, {
+    "name" : "local_end_datetime",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) local end date-time.",
+    "default" : null
+  }, {
+    "name" : "local_end_timezone",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) local end timezone.",
+    "default" : null
+  }, {
+    "name" : "source_name",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "duration_in_milliseconds",
+    "type" : [ "null", "long" ],
+    "doc" : "The (optional) duration (in milliseconds).",
+    "default" : null
+  }, {
+    "name" : "capped_duration_in_milliseconds",
+    "type" : [ "null", "long" ],
+    "doc" : "The (optional) capped duration (in milliseconds).",
+    "default" : null
+  }, {
+    "name" : "duration_capping_strategy_name",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "location_latitude",
+    "type" : [ "null", "double" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "location_longitude",
+    "type" : [ "null", "double" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "location_altitude",
+    "type" : [ "null", "double" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "location_accuracy_in_meters",
+    "type" : [ "null", "double" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "recording_location_imprecision_in_milliseconds",
+    "type" : [ "null", "long" ],
+    "doc" : "The (optional) difference between the recording timestamp and the location timestamp (in milliseconds). A bigger difference is synonymous with a bigger imprecision.",
+    "default" : null
+  }, {
+    "name" : "start_location_imprecision_in_milliseconds",
+    "type" : [ "null", "long" ],
+    "doc" : "The (optional) difference between the start timestamp and the location timestamp (in milliseconds). A bigger difference is synonymous with a bigger imprecision.",
+    "default" : null
+  }, {
+    "name" : "end_location_imprecision_in_milliseconds",
+    "type" : [ "null", "long" ],
+    "doc" : "The (optional) difference between the end timestamp and the location timestamp (in milliseconds). A bigger difference is synonymous with a bigger imprecision.",
+    "default" : null
+  }, {
+    "name" : "location_provider_name",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) location provider name.",
+    "default" : null
+  }, {
+    "name" : "location_recording_timestamp",
+    "type" : [ "null", "long" ],
+    "doc" : "The (optional) location recording timestamp (milliseconds since 1970-01-01T00:00:00.000Z).",
+    "default" : null
+  }, {
+    "name" : "location_recording_date",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) location recording date (UTC).",
+    "default" : null
+  }, {
+    "name" : "location_recording_datetime",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) location recording date-time (UTC).",
+    "default" : null
+  }, {
+    "name" : "local_location_recording_date",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) local location recording date.",
+    "default" : null
+  }, {
+    "name" : "local_location_recording_datetime",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) local location recording date-time.",
+    "default" : null
+  }, {
+    "name" : "local_location_recording_timezone",
+    "type" : [ "null", "string" ],
+    "doc" : "The (optional) local location recording timezone.",
+    "default" : null
+  }, {
+    "name" : "usage__session_id",
+    "type" : [ "null", "string" ],
+    "doc" : "The user and device -based usage session ID.",
+    "default" : null
+  }, {
+    "name" : "appusage__application_id",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "appusage__application_id_session_id",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "appusage__application_name_from_device",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "appusage__application_name_from_store",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "appusage__application_vendor_name_from_store",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__uri",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__uri_scheme",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__uri_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__uri_pay_level_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__uri_pay_level_domain_session_id",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__referrer_uri",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__referrer_uri_scheme",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__referrer_uri_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__referrer_uri_pay_level_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__browser_name",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__browser_version",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__browser_window_id",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "webusage__page_title",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networktraffic__connection_type_name",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networktraffic__number_of_bytes_sent",
+    "type" : [ "null", "long" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networktraffic__number_of_bytes_received",
+    "type" : [ "null", "long" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__request_process_name",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__request_uri",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__request_uri_scheme",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__request_uri_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__request_uri_pay_level_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_request_referrer_uri",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_request_referrer_uri_scheme",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_request_referrer_uri_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_request_referrer_uri_pay_level_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_request_cookies",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_request_user_agent",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_response_content_type",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_response_status_code",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_response_cookies",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_response_location_uri",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_response_location_uri_scheme",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_response_location_uri_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "networkrequestresponse__http_response_location_uri_pay_level_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "searchrequest__search_query",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "searchrequest__search_engine_name",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "searchrequest__search_source_type_name",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "devicestatechange__new_state_name",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "adcontact__type_name",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "adcontact__uri",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "adcontact__uri_scheme",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "adcontact__uri_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "adcontact__uri_pay_level_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "adcontact__landing_page_uri",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "adcontact__landing_page_uri_scheme",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "adcontact__landing_page_uri_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "adcontact__landing_page_uri_pay_level_domain",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "adcontact__textual_ad_text",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  }, {
+    "name" : "adcontact__textual_ad_linked_text",
+    "type" : [ "null", "string" ],
+    "doc" : "",
+    "default" : null
+  } ]
+}

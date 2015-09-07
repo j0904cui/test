@@ -1,0 +1,573 @@
+    4  ssh -i .ssh/key ccuser@78.137.97.25
+    5  exit
+    6  ps aux | grep ssh
+    7  netstat -tulpen
+    8  netstat -tulpen
+    9  netstat -tulpen|grep LISTEN
+   10  curl hyperlane-staging.gfk.com
+   11  ping hyperlane-staging.gfk.com
+   12  exit
+   13  impala-shell -i vm-cmv-02
+   14  ifconfig
+   15  ls
+   16  ll
+   17  exit
+   18  exit
+   19  psa ux
+   20  netstat -tulpan
+   21  netstat -tulpan  | grep 105
+   22  telnet 10.9.192.11:10563
+   23  telnet 10.9.192.11 10563
+   24  curl 10.9.192.11 10563
+   25  psa ux
+   26  netstat -tpan
+   27  netstat -tpan  | grep 105
+   28  ps aux
+   29  ps auxfww
+   30  curl hyperlane-staging.gfk.com
+   31  telnet 195.238.163.134 80
+   32  exit
+   33  ps aux
+   34  cd /etc/init.d/
+   35  ls
+   36  cat autossh
+   37  vim autossh
+   38  ps auxfww
+   39  cp autossh autossh-hyperlane-80
+   40  vim autossh-hyperlane-80
+   41  netstat -tapn | grep 80
+   42  vim autossh-hyperlane-80
+   43  ps auxfww
+   44  vim autossh-hyperlane-80
+   45  ls -lah autossh-hyperlane-80
+   46  ps aux
+   47  /etc/init.d/autossh-hyperlane-80 start
+   48  psa ux
+   49  ps aux
+   50  ps auxfww
+   51  ps auxfww | grep ssh
+   52  ps auxfww | grep autossh
+   53  ps auxfww | grep autossh
+   54  vim autossh-hyperlane-80
+   55  /etc/init.d/autossh-hyperlane-80 start
+   56  ps aux
+   57  ps auxfww | grep autossh
+   58  curl 10.9.192.11:10564
+   59  curl 10.9.192.11:10564
+   60  vim autossh-hyperlane-80
+   61  kill 55236
+   62  ps auxfww | grep autossh
+   63  vim autossh-hyperlane-80
+   64  vim autossh-hyperlane-80
+   65  /etc/init.d/autossh-hyperlane-80 start
+   66  ps aux
+   67  curl 10.9.192.11:10564
+   68  ifconfig
+   69  ls
+   70  cd /user
+   71  cd hive
+   72  ls
+   73  ls
+   74  cd
+   75  cd root
+   76  cd /root
+   77  ssh vm-cmv-04
+   78  hdfs dfs -ls /user
+   79  hdfs dfs -ls /user/hive
+   80  hdfs dfs -ls /user/hive/warehouse
+   81  hdfs dfs -ls /user/hive/warehouse/gxl_de.db
+   82  hdfs dfs -ls /user/hive/warehouse/gxl_de.db/activity_p1d_staging_v1
+   83  hdfs dfs -ls /user/hive/warehouse/gxl_de.db/activity_p1d_staging_v1/.metadata
+   84  hdfs dfs -copyToLocal /user/hive/warehouse/gxl_de.db/activity_p1d_staging_v1/.metadata/sche                          mas/1.avsc
+   85  kite-dataset schema activity
+   86  export HADOOP_USER_NAME=hdfs
+   87  export JAVA_HOME=/usr/lib/jvm/java-7-oracle-cloudera
+   88  kite-dataset schema activity
+   89  sh new_dataset_schema_kite.sh
+   90  sh new_dataset_schema_kite.sh
+   91  cd tabitha_activity_engine_test/
+   92  sh new_dataset_schema_kite.sh
+   93  sh new_dataset_schema_kite.sh
+   94  kite-dataset schema activity
+   95  hdfs dfs -ls /user/hive/warehouse/hyperlane_de.db/activity_test_p1d_staging_v1/.metadata
+   96  hdfs dfs -ls /user/hive/warehouse/hyperlane_de.db/activity_test_p1d_staging_v1/.metadata/sc                          hemas
+   97  hdfs dfs -ls /user/hive/warehouse/hyperlane_de.db/
+   98  hdfs dfs -ls /user/hive/warehouse/gxl_de.db/
+   99  sh new_dataset_schema_kite.sh
+  100  sh new_dataset_schema_kite.sh
+  101  sh new_dataset_schema_kite.sh
+  102  sh new_dataset_schema_kite.sh
+  103  sh new_dataset_schema_kite.sh
+  104  sh new_dataset_schema_kite.sh
+  105  sh new_dataset_schema_kite.sh
+  106  kite-dataset delete dataset:hive:hyperlane_de/activity_test_p1d_staging_v1
+  107  hdfs dfs -ls /user/hive/warehouse/hyperlane_de.db/activity_test_p1d_staging_v1/.metadata/sc                          hemas
+  108  sh new_dataset_schema_kite.sh
+  109  kite-dataset delete dataset:hive:hyperlane_de/activity_test_p1d_staging_v1
+  110  sh new_dataset_schema_kite.sh
+  111  sh new_dataset_schema_kite.sh
+  112  sh new_dataset_schema_kite.sh
+  113  sh new_dataset_schema_kite.sh
+  114  sh new_dataset_schema_kite.sh
+  115  sh new_dataset_schema_kite.sh
+  116  sh new_dataset_schema_kite.sh
+  117  kite-dataset delete
+  118  sh new_dataset_schema_kite.sh
+  119  sh new_dataset_schema_kite.sh
+  120  sh new_dataset_schema_kite.sh
+  121  sh new_dataset_schema_kite.sh
+  122  sh new_dataset_schema_kite.sh
+  123  sh new_dataset_schema_kite.sh
+  124  sh new_dataset_schema_kite.sh
+  125  sh new_dataset_schema_kite.sh
+  126  sh new_dataset_schema_kite.sh
+  127  kite-dataset delete dataset:hive:hyperlane_de/activity_test_p1d_staging_v1
+  128  sh new_dataset_schema_kite.sh
+  129  sh new_dataset_schema_kite.sh
+  130  sh new_dataset_schema_kite.sh
+  131  kite-dataset schema [
+  132    {"type": "hash", "source": "email", "buckets": 16},
+  133    {"type": "identity", "source": "email"}
+  134  kite-dataset schema activity_p1d_staging_v1
+  135  kite-dataset schema gxl_de.activity_p1d_staging_v1
+  136  sh new_dataset_schema_kite.sh
+  137  sh new_dataset_schema_kite.sh
+  138  sh new_dataset_schema_kite.sh
+  139  sh new_dataset_schema_kite.sh
+  140  kite-dataset info hyperlane_de/activity_test_p1d_staging_v1
+  141  kite-dataset info gxl_de
+  142  kite-dataset delete dataset:hive:hyperlane_de/activity_test_p1d_staging_v1
+  143  sh new_dataset_schema_kite.sh
+  144  sh new_dataset_schema_kite.sh
+  145  sh new_dataset_schema_kite.sh
+  146  sh new_dataset_schema_kite.sh
+  147  kite-dataset schema dataset:hive:gxl_de/activity_p1d_staging_v1
+  148  kite-dataset info dataset:hive:gxl_de/activity_p1d_staging_v1
+  149  sh new_dataset_schema_kite.sh
+  150  sh new_dataset_schema_kite.sh
+  151  sh new_dataset_schema_kite.sh
+  152  sh new_dataset_schema_kite.sh
+  153  sh new_dataset_schema_kite.sh
+  154  sh new_dataset_schema_kite.sh
+  155  kite-dataset show dataset:hive:hyperlane_de/activity_test_p1d_staging_v1
+  156  kite-dataset show  dataset:hive:gxl_de/activity_p1d_staging_v1
+  157  kite-dataset show dataset:hive:hyperlane_de/activity_test_p1d_staging_v1
+  158  kite-dataset show dataset:hive:hyperlane_de/activity_test_p1d_staging_v1
+  159  cd
+  160  cd tabitha_activity_engine_test/
+  161  ös
+  162  ls
+  163   ssh vm-cmv-02
+  164  ls
+  165  pwd
+  166  mkdir fsc
+  167  cd fsc
+  168  ssh-keygen -t rsa -b 4096 -C "fschmaljohann@gfk.com"
+  169  sudo -u hdfs hdfs dfs -copyFromLocal * /user/fschmaljohann/
+  170  chmod 777 *
+  171  sudo -u hdfs hdfs dfs -copyFromLocal * /user/fschmaljohann/
+  172  ls -lachs
+  173  hdfs dfs -copyFromLocal * /user/fschmaljohann/
+  174  chmod 777 id_rsa
+  175  ls -lachs
+  176  cd ..
+  177  chmod 777 fsc
+  178  cd fsc
+  179  hdfs dfs -copyFromLocal * /user/fschmaljohann/
+  180  sudo -u hdfs hdfs dfs -copyFromLocal * /user/fschmaljohann/
+  181  sudo -u hdfs hdfs dfs -copyFromLocal * /user/fschmaljohann/
+  182  sudo -u hdfs hdfs dfs -copyFromLocal id_rsa /user/fschmaljohann/
+  183  sudo -u hdfs hdfs dfs -mkdir -p /user/fschmaljohann/
+  184  sudo -u hdfs hdfs dfs -copyFromLocal id_rsa /user/fschmaljohann/
+  185  ls -lachs id_rsa
+  186  cat id_rsa
+  187  -----BEGIN RSA PRIVATE KEY-----
+  188  Proc-Type: 4,ENCRYPTED
+  189  DEK-Info: AES-128-CBC,ECB2B6B6481217120D721932EC1A9EDC
+  190  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
+  239  -----END RSA PRIVATE KEY-----
+  240   ssh vm-cmv-02
+  241  cat id_rsa.pub
+  242   ssh vm-cmv-02
+  243  ssh -i id_rsa root@vm-cmv-02
+  244  chmod 700 id_rsa
+  245  ssh -i id_rsa root@vm-cmv-02
+  246  pig
+  247  pig -useHCatalog
+  248  pig -useHCatalog
+  249  hdfs dfs -cat /user/fschmaljohann/export.pig
+  250  ssh -i id_rsa root@vm-cmv-02
+  251  exit
+  252  cd /opt/hyperlane/
+  253  ls
+  254  less application.properties
+  255  ls
+  256  rm dataset-management-cli-0.*
+  257  ls -lah
+  258  less lastId.properties
+  259  rm dataset-management-cli*SNAP*
+  260  ls
+  261  ls -lah
+  262  less /application.properties
+  263  rm /application.properties
+  264  ls
+  265  rm /dataset-rule-engine.jar
+  266  ls -lah
+  267  vim datasetRuleSyncPositions.properties
+  268  dataset-rule-engine
+  269  ls
+  270  less dataset-rule-engine.properties
+  271  vim dataset-rule-engine.properties
+  272  vim /usr/local/bin/dataset-rule-engine
+  273  dataset-rule-engine
+  274  vim dataset-rule-engine.properties
+  275  dataset-rule-engine
+  276  export HADOOP_USER_NAME=hdfs
+  277  dataset-rule-engine
+  278  beeline -u jdbc:hive2://VM-CMV-04:10000 -n helmut -p helmut
+  279  ssh -i .ssh/key ccuser@78.137.97.25
+  280  cd
+  281  ssh -i .ssh/key ccuser@78.137.97.25
+  282  ssh -i .ssh/key ccuser@78.137.97.25
+  283  ssh -i .ssh/key ccuser@78.137.97.25
+  284  exit
+  285  cd /var/log/tomcat7/
+  286  ls
+  287  tail -f catalina.out
+  288  exit
+  289  ssh vm-cmv-02
+  290  rm /opt/hyperlane/dataset-publisher
+  291  cd /opt/hyperlane/
+  292  ls
+  293  cd /opt/hyperlane/dataset-publisher/
+  294  less application.properties
+  295  git status
+  296  ls
+  297  cd /opt/hyperlane/
+  298  ls
+  299  rm dataset-rule-engine*
+  300  ls -lah
+  301  rm dataset-management-cli-1.1.jar
+  302  rm dataset-management-cli-1.6.0.jar
+  303  ls -lah
+  304  less datasetRuleSyncPositions.properties
+  305  mv datasetRuleSyncPositions.properties dataset-publisher/
+  306  ls
+  307  cd dataset-publisher/
+  308  ls
+  309  ls -lah
+  310  cd
+  311  ls -lah
+  312  rm /usr/local/bin/dataset-rule-engine
+  313  rm /usr/local/bin/dataset-publisher
+  314  dataset-publisher
+  315  less /opt/hyperlane/dataset-publisher/application.properties
+  316  less /opt/hyperlane/dataset-publisher/application.properties
+  317  less /opt/hyperlane/dataset-publisher/application.properties
+  318  dataset-publisher
+  319  ls
+  320  cd /opt/hyperlane/
+  321  ls
+  322  if [ -f dataset-management-cli.*.jar ] then echo "hallo" else echo "no" fi
+  323  if [ -f dataset-management-cli.*.jar ]; then echo "hallo"; else echo "no"; fi
+  324  ls dataset-management-cli.*.jar
+  325  ls dataset-management-cli-*.jar
+  326  if [ -f dataset-management-cli-*.jar ]; then echo "hallo"; else echo "no"; fi
+  327  ls dataset-management-cli-*.jar
+  328  cd dataset-publisher/
+  329  vim datasetRuleSyncPositions.properties
+  330  ls -lah
+  331  ls -lah
+  332  ls -lah
+  333  ls -lah
+  334  ls -lah
+  335  ls -lah
+  336  ls -lah
+  337  ls -lah
+  338  cd ..
+  339  ls
+  340  ls -lah dataset-publisher/
+  341  cd dataset-publisher/
+  342  ls -lah
+  343  vim datasetRuleSyncPositions.properties
+  344  ls -lah
+  345  dataset-publisher
+  346  less datasetRuleSyncPositions.properties
+  347  cd ..
+  348  ls
+  349  ls -lah
+  350  cd dataset-publisher/
+  351  ls -lah
+  352  cd ..
+  353  ls
+  354  less application.properties
+  355  crontab -e
+  356  export EDITOR=vim
+  357  crontab -l
+  358  ssh -i .ssh/key ccuser@78.137.97.25
+  359  cd
+  360  ssh -i .ssh/key ccuser@78.137.97.25
+  361  cd /opt/hyperlane/
+  362  ls
+  363  cd
+  364  ssh -i .ssh/key ccuser@78.137.97.25
+  365  crontab -e
+  366  exit
+  367  cd
+  368  ssh -i .ssh/key ccuser@78.137.97.25
+  369  exit
+  370  ls
+  371  cd /root/
+  372  ls
+  373  ssh vm-cmv-02
+  374  ls
+  375  cd /opt/hyperlane/
+  376  ls
+  377  which dataset-management
+  378  ls /usr/local/bin/dataset-
+  379  ls /usr/local/bin/
+  380  exit
+  381  dc /opt/hyperlane/
+  382  ls
+  383  cd /opt/hyperlane/
+  384  ls
+  385  ls -lah
+  386  dataset-cleanup
+  387  cd dataset-cleanup/
+  388  ls
+  389  less application.properties
+  390  crontab -l
+  391  ls
+  392  ls
+  393  cd /opt/hyperlane/
+  394  ls
+  395  less application.properties
+  396  ls
+  397  rm application.properties
+  398  ls
+  399  rm hyperlane-data-cleanup-1.0.*
+  400  ls
+  401  rm hyperlane-dataset-cleanup.jar
+  402  mv lastId.properties dataset-cleanup/
+  403  ls -lah
+  404  ls -lah /opt/hyperlane/
+  405  ls -lah /usr/local/bin/dataset-*
+  406  dataset-cleanup
+  407  less dataset-publisher/application.properties
+  408  clear
+  409  ls -lah /opt/hyperlane/
+  410  ls -lah /usr/local/bin/dataset-*
+  411  dataset-cleanup
+  412  dataset-cleanup
+  413  dataset-cleanup
+  414  dataset-cleanup
+  415  less dataset-cleanup/application.properties
+  416  less dataset-cleanup/application.properties
+  417  dataset-cleanup
+  418  hostname
+  419  grep ip78-137-97-234.pbiaas.com dataset-cleanup/
+  420  grep -r ip78-137-97-234.pbiaas.com dataset-cleanup/
+  421  less dataset-cleanup/application.properties
+  422  dataset-management
+  423  ls
+  424  cd /opt/hyperlane/
+  425  ls
+  426  mv dataset-management-cli-1.6.1.jar dataset-management
+  427  cd dataset-management/
+  428  ls -lah
+  429  ln -sf /opt/hyperlane/dataset-management/dataset-management.jar /opt/hyperlane/dataset-mana                          gement/dataset-management-cli-1.6.1.jar
+  430  dataset-management
+  431  ls -lah
+  432  ln -sf  /opt/hyperlane/dataset-management/dataset-management-cli-1.6.1.jar /opt/hyperlane/d                          ataset-management/dataset-management.jar
+  433  ls -lah
+  434  ls
+  435  ln -sf  /opt/hyperlane/dataset-management/dataset-management-cli-1.7.0-HYL-273-SNAPSHOT.jar                           /opt/hyperlane/dataset-management/dataset-management.jar
+  436  ls -lah
+  437  rm dataset-management-cli-1.6.1.jar
+  438  rm dataset-management.jar
+  439  ln -sf  /opt/hyperlane/dataset-management/dataset-management-cli-1.7.0-HYL-273-SNAPSHOT.jar                           /opt/hyperlane/dataset-management/dataset-management.jar
+  440  ls -lah
+  441  dataset-management
+  442  cd ..
+  443  ls
+  444  rm dataset-management-cli-1.0.jar
+  445  ls -lah
+  446  rm dataset-management-cli.jar
+  447  ls -lah
+  448  dataset-management
+  449  dataset-cleanup
+  450  ssh vm-cmv-04
+  451  ls
+  452  less /usr/local/bin/dataset-publisher
+  453  less /usr/local/bin/dataset-cleanup
+  454  less /usr/local/bin/dataset-publisher
+  455  cd dataset-publisher/
+  456  ls
+  457  less datasetRuleSyncPositions.properties
+  458  dataset-publisher
+  459  dataset-publisher
+  460  dataset-publisher
+  461  dataset-publisher
+  462  dataset-publisher
+  463  rm datasetRuleSyncPositions.properties
+  464  dataset-publisher
+  465  cd
+  466  ssh -i .ssh/key ccuser@78.137.97.25
+  467  man sshd
+  468  cd
+  469  ssh -i .ssh/key ccuser@78.137.97.25
+  470  exit
+  471  vi /etc/crontab
+  472  mkdir /var/log/hyperlane
+  473  chown -R wvuser: /var/log/hyperlane/
+  474  vi /etc/crontab
+  475  exit
+  476  rm -f -R meter_type_name=Addon
+  477  ls
+  478  rm -f -R meter_type_name=MobileMeter
+  479  ls
+  480  cd uld_id__e5defea7c853232/
+  481  ls
+  482  sudo -u hdfs oozie job -oozie http://78.137.99.5:11000/oozie -config job.properties -submit
+  483  pig
+  484  vi /etc/crontab
+  485  vi /etc/crontab
+  486  vi /etc/crontab
+  487  /usr/local/bin/dataset-cleanup > /var/log/hyperlane/dataset-cleanup.log 2>&1
+  488  cat /var/log/hyperlane/dataset-cleanup.log
+  489  vi /etc/logrotate.conf
+  490  vi /etc/logrotate.d/rsyslog
+  491  vi /etc/logrotate.d/dataset-cleanup
+  492  vi /etc/crontab
+  493  vi /etc/crontab
+  494  exit
+  495  pig version
+  496  pig -v
+  497  cd GO-259
+  498  oozie validate workflow.xml
+  499  ssh VM-CMV-02
+  500  ls
+  501  ll
+  502  pwd
+  
+  
+ https://cwiki.apache.org/confluence/display/Hive/Tutorial
+  
+  
+  CREATE TABLE doctors
+ROW FORMAT
+SERDE 'org.apache.hadoop.hive.serde2.avro.AvroSerDe'
+STORED AS
+INPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat'
+TBLPROPERTIES ('avro.schema.literal'='{
+  "namespace": "testing.hive.avro.serde",
+  "name": "doctors",
+  "type": "record",
+  "fields": [
+    {
+      "name":"number",
+      "type":"int",
+      "doc":"Order of playing the role"
+    },
+    {
+      "name":"first_name",
+      "type":"string",
+      "doc":"first name of actor playing role"
+    },
+    {
+      "name":"last_name",
+      "type":"string",
+      "doc":"last name of actor playing role"
+    },
+    {
+      "name":"extra_field",
+      "type":"string",
+      "doc:":"an extra field not in the original file",
+      "default":"fishfingers and custard"
+    }
+  ]
+}');
+
+LOAD DATA LOCAL INPATH '/usr/share/doc/hive-0.7.1+42.55/examples/files/doctors.avro' INTO TABLE doctors;
+
+
+06/19/15 10:41:10	describe extended hyperlane_de.person_exposure_p1m_view_test	Ergebnisse anzeigen...	 
+06/19/15 10:32:07	show create table hyperlane_de.ird_view_approved	Ergebnisse anzeigen...	 
+06/19/15 10:31:11	show create table hyperlane_de.person_exposure_p1m_view_test	Ergebnisse anzeigen...	 
+06/19/15 09:50:41	describe hyperlane_de.ird_view_approved;	Ergebnisse anzeigen...	 
+06/19/15 09:34:09	show partitions ird_view_approved;	Ergebnisse anzeigen...	 
+06/19/15 09:28:50	show create table ird_view_approved;	Ergebnisse anzeigen...	 
+06/19/15 09:27:29	show create table ird_staging_v1;	Ergebnisse anzeigen...	 
+06/19/15 09:22:36	describe extended ird_staging_v1;	Ergebnisse anzeigen...	 
+06/16/15 08:00:08	describe extended hyperlane_de.ird_staging_v1	Ergebnisse anzeigen...	 
+06/15/15 13:19:39	ALTER TABLE person_attribute_p1m_view_approved DROP PARTITION ( slice_year = '2014', slice_month = '11', slice_start = '2014-11-01', v_loading_time = '2015-06-03T09-24-54-174Z' );	Ergebnisse anzeigen...	 
+06/15/15 13:19:27	ALTER TABLE person_attribute_p1m_view_approved DROP PARTITION ( slice_year = '2014', slice_month = '12', slice_start = '2014-12-01', v_loading_time = '2015-06-03T09-17-51-671Z' );	Ergebnisse anzeigen...	 
+06/15/15 11:53:33	ALTER TABLE person_attribute_p1m_view_approved ADD IF NOT EXISTS PARTITION ( slice_year = '2014', slice_month = '12', slice_start = '2014-12-01', v_loading_time = '2015-06-03T09-17-51-671Z' ) LOCATION '/user/hive/warehouse/hyperlane_de.db/person_attribute_p1m_staging_v1/slice_year=2014/slice_month=12/slice_start=2014-12-01/v_loading_time=2015-06-03T09-17-51-671Z';	Ergebnisse anzeigen...	 
+06/15/15 11:53:28	ALTER TABLE person_attribute_p1m_view_approved DROP PARTITION ( slice_year = '2014', slice_month = '12', slice_start = '2014-12-01', v_loading_time = '2015-06-03T09-17-51-671Z' );	Ergebnisse anzeigen...	 
+
+
+CREATE TABLE uld_id__e5defea7c853232.u_data (
+  userid INT,
+  movieid INT,
+  rating INT,
+  unixtime STRING)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+STORED AS TEXTFILE;
+
+
+LOAD DATA LOCAL INPATH '/var/transfer/test/ml-100k/u.data' OVERWRITE INTO TABLE uld_id__e5defea7c853232.u_data;
+
+LOAD DATA LOCAL INPATH /tmp/pv_2008-06-08_us.txt INTO TABLE page_view PARTITION(date='2008-06-08', country='US')
+
+LOAD DATA LOCAL INPATH '/var/transfer/uld_id__e5defea7c853232/meter_type_name=MobileMeter/type_name=WebUsage/start_date=2015-02-28/local_start_date=2015-02-28/transaction_timestamp=1440761918000/677acc1b-c743-4538-a188-9929aa359dde.avro'  INTO TABLE  uld_de PARTITION(meter_type_name='MobileMeter', type_name='WebUsage', start_date='2015-02-28', local_start_date='2015-02-28', transaction_timestamp='1440761918000')
+;
