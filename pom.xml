@@ -14,15 +14,13 @@
 		<org.aspectj-version>1.6.11</org.aspectj-version>
 		<org.slf4j-version>1.6.4</org.slf4j-version>
 
-		<mysql-version>5.1.18</mysql-version>
-
-		<hibernate-core-version>4.1.2.Final</hibernate-core-version>
-		<hibernate-search-version>4.3.0.Final</hibernate-search-version>
+		<mysql-version>5.1.18</mysql-version> 
+		 
 		<jackson.version>2.3.2</jackson.version>
 		<jersey.version>2.15</jersey.version>
-		<primefaces.version>5.2</primefaces.version>
+		 
  
-		<version.oltu>1.0.0</version.oltu>
+		<hadoop.version>2.3.0</hadoop.version>
 		
 	</properties>
 	<dependencies> 
@@ -81,6 +79,18 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
+<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-client</artifactId>
+			<version>${hadoop.version}</version>
+		</dependency>
+  
+  <dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-common</artifactId>
+			<version>${hadoop.version}</version>
+		</dependency>
+   
   </dependencies>
   
   <build>
