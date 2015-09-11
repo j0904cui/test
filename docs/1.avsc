@@ -111,7 +111,7 @@
   }, {
     "name" : "local_start_timezone",
     "type" : [ "null", "string" ],
-    "doc" : "The (optional) local start timezone.",
+    "doc" : "The (optional) local start timezone.",ng
     "default" : null
   }, {
     "name" : "end_timestamp",

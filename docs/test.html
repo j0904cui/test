@@ -1,3 +1,28 @@
+if you login to 78.137.97.234 and curl -s 'http://localhost:81/templeton/v1/ddl/database/mep_de/table?user.name=hive'
+curl -i "http://nurago297.nurago.cd.net.de:14000/webhdfs/v1/user/nrg_afahlke/?user.name=nrg_afahlke&op=LISTSTATUS"
+
+curl  http://78.137.97.234:14000/webhdfs/v1/user/hdfs/?user.name=hdfs&op=LISTSTATUS
+
+https://hadoop.apache.org/docs/r1.0.4/webhdfs.html
+
+
+Das geht nur noch �ber localhost auf der nurago296. Also wie folgt:
+
+$ ssh nrg_afahlke@nurago296 (deinen Namen nutzen ;) )
+$ curl "http://127.0.0.1:50111/templeton/v1/version"
+
+Keypass-Key
+ 
+M&%\C/J4<FKOt\@c
+ 
+ https://stash.gfk.com/projects/HYL/repos/generic-import/browse
+ beeline -u jdbc:hive2://VM-CMV-04:10000 -n hdfs -p dummy
+ https://confluence.gfk.com/display/GXL/Hyperlane+Dataset
+ https://cmv-hue:8888/filebrowser/#/user/hyperlane/engines/generic-import/0.2
+
+ oozie job -oozie http://vm-cmv-05:11000/oozie -config job.properties -run
+ 
+ 
     4  ssh -i .ssh/key ccuser@78.137.97.25
     5  exit
     6  ps aux | grep ssh
@@ -571,3 +596,4 @@ LOAD DATA LOCAL INPATH /tmp/pv_2008-06-08_us.txt INTO TABLE page_view PARTITION(
 
 LOAD DATA LOCAL INPATH '/var/transfer/uld_id__e5defea7c853232/meter_type_name=MobileMeter/type_name=WebUsage/start_date=2015-02-28/local_start_date=2015-02-28/transaction_timestamp=1440761918000/677acc1b-c743-4538-a188-9929aa359dde.avro'  INTO TABLE  uld_de PARTITION(meter_type_name='MobileMeter', type_name='WebUsage', start_date='2015-02-28', local_start_date='2015-02-28', transaction_timestamp='1440761918000')
 ;
+dataset-management create-dataset-field-based-slices -c jjtest -d  uld -s /root/uld.avsc -sd P1D -f start_datetime

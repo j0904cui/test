@@ -26,13 +26,12 @@ public class RestServiceUtil {
 		Client client = ClientBuilder.newClient(clientConfig).register(
 				MultiPartFeature.class);
 		client.register(provider);
-		HttpAuthenticationFeature feature = HttpAuthenticationFeature
-				.basicBuilder()
-				.nonPreemptive()
-				.credentials(connectionParameter.getUser(),
-						connectionParameter.getPassword()).build();
-		client.register(feature);
-
+		/*
+		 * HttpAuthenticationFeature feature = HttpAuthenticationFeature
+		 * .basicBuilder() .nonPreemptive()
+		 * .credentials(connectionParameter.getUser(),
+		 * connectionParameter.getPassword()).build(); client.register(feature);
+		 */
 		// client.addFilter(new GZIPContentEncodingFilter(true));
 		return client.target(connectionParameter.getServicePathURL());
 

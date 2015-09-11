@@ -1,6 +1,6 @@
-drop  TABLE uld_de;
+drop  TABLE uld;
 
-CREATE  TABLE uld_de(
+CREATE  TABLE uld(
   is_imputed boolean COMMENT 'from deserializer', 
   panel_id string COMMENT 'from deserializer', 
   panel_household_id string COMMENT 'from deserializer', 

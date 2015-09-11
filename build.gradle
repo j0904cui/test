@@ -27,6 +27,21 @@ artifacts {
 }
 
 dependencies {
+
+ 	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version: '2.3.2'
+ compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.3.2'
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.3.2'
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.3.2'
+  compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-base', version: '2.3.2'
+  compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.3.2'
+  compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.15'
+ compile group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version: '2.15'
+  compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.15'
+ 	udf group: 'org.apache.pig', name: 'piggybank', version: '0.12.0'
+ 	 compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3'
+	 compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '2.15'
+
+
     compile group: 'org.apache.hadoop', name: 'hadoop-client', version:'2.3.0-cdh5.1.0'
     compile group: 'org.apache.hive.hcatalog', name: 'hive-webhcat-java-client', version: '0.12.0-cdh5.1.0'
     compile group: 'org.apache.hive.hcatalog', name: 'hive-hcatalog', version: '0.12.0-cdh5.1.0'
@@ -46,16 +61,7 @@ dependencies {
     compile group: 'com.twitter', name: 'parquet-avro', version: '1.5.0'
     compile group: 'org.kitesdk', name: 'kite-data-core', version: '1.0.0'
     compile group: 'org.apache.avro', name: 'avro-mapred', version: '1.7.5-cdh5.1.0'
- 	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version: '2.3.2'
- compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.3.2'
-  compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.3.2'
-  compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.3.2'
-  compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-base', version: '2.3.2'
-  compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.3.2'
-  compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.15'
- compile group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version: '2.15'
-  compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.15'
- 	udf group: 'org.apache.pig', name: 'piggybank', version: '0.12.0'
+
 }
 
 task copyOozieConfig {
