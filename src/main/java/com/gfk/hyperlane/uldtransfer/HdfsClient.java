@@ -52,9 +52,9 @@ public class HdfsClient {
 	public boolean ifExists(Path source) throws IOException {
 
 		Configuration config = new Configuration();
-		config.addResource(new Path("/home/hadoop/hadoop/conf/core-site.xml"));
-		config.addResource(new Path("/home/hadoop/hadoop/conf/hdfs-site.xml"));
-		config.addResource(new Path("/home/hadoop/hadoop/conf/mapred-site.xml"));
+		config.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
+		config.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
+		config.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem hdfs = FileSystem.get(config);
 		boolean isExists = hdfs.exists(source);
@@ -63,9 +63,9 @@ public class HdfsClient {
 
 	public void getHostnames() throws IOException {
 		Configuration config = new Configuration();
-		config.addResource(new Path("/home/hadoop/hadoop/conf/core-site.xml"));
-		config.addResource(new Path("/home/hadoop/hadoop/conf/hdfs-site.xml"));
-		config.addResource(new Path("/home/hadoop/hadoop/conf/mapred-site.xml"));
+		config.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
+		config.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
+		config.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fs = FileSystem.get(config);
 		DistributedFileSystem hdfs = (DistributedFileSystem) fs;
@@ -81,9 +81,9 @@ public class HdfsClient {
 	public void getBlockLocations(String source) throws IOException {
 
 		Configuration conf = new Configuration();
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/mapred-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fileSystem = FileSystem.get(conf);
 		Path srcPath = new Path(source);
@@ -114,9 +114,9 @@ public class HdfsClient {
 	public void getModificationTime(String source) throws IOException {
 
 		Configuration conf = new Configuration();
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/mapred-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fileSystem = FileSystem.get(conf);
 		Path srcPath = new Path(source);
@@ -141,9 +141,9 @@ public class HdfsClient {
 	public void copyFromLocal(String source, String dest) throws IOException {
 
 		Configuration conf = new Configuration();
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/mapred-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fileSystem = FileSystem.get(conf);
 		Path srcPath = new Path(source);
@@ -173,9 +173,9 @@ public class HdfsClient {
 	public void copyToLocal(String source, String dest) throws IOException {
 
 		Configuration conf = new Configuration();
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/mapred-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fileSystem = FileSystem.get(conf);
 		Path srcPath = new Path(source);
@@ -204,9 +204,9 @@ public class HdfsClient {
 
 	public void renameFile(String fromthis, String tothis) throws IOException {
 		Configuration conf = new Configuration();
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/mapred-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fileSystem = FileSystem.get(conf);
 		Path fromPath = new Path(fromthis);
@@ -240,9 +240,9 @@ public class HdfsClient {
 
 		// Conf object will read the HDFS configuration parameters
 		Configuration conf = new Configuration();
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/mapred-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fileSystem = FileSystem.get(conf);
 
@@ -283,9 +283,9 @@ public class HdfsClient {
 
 	public void readFile(String file) throws IOException {
 		Configuration conf = new Configuration();
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/mapred-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fileSystem = FileSystem.get(conf);
 
@@ -316,9 +316,9 @@ public class HdfsClient {
 
 	public void deleteFile(String file) throws IOException {
 		Configuration conf = new Configuration();
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/mapred-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fileSystem = FileSystem.get(conf);
 
@@ -335,9 +335,9 @@ public class HdfsClient {
 
 	public void mkdir(String dir) throws IOException {
 		Configuration conf = new Configuration();
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/home/hadoop/hadoop/conf/mapred-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fileSystem = FileSystem.get(conf);
 
