@@ -31,7 +31,8 @@ public class HdfsClient {
 	public void HdfsClient() {
 
 	}
-
+	Configuration conf = new Configuration();
+	
 	public static void printUsage() {
 		System.out
 				.println("Usage: hdfsclient add" + "<local_path> <hdfs_path>");
@@ -280,7 +281,20 @@ public class HdfsClient {
 		out.close();
 		fileSystem.close();
 	}
+	public void readDir(String file) throws IOException {
+		FileSystem fileSystem = FileSystem.get(conf);
+		FileStatus[] dir = fileSystem.listStatus(new Path(file));
+		for (int i = 0; i < dir.length; i++) {
+			System.out.println("File " + dir[i] + " does not exists");
+		}
+	}
+	public void setConf() throws IOException {
+		
+		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
+		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
+	}
 	public void readFile(String file) throws IOException {
 		Configuration conf = new Configuration();
 		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
@@ -353,13 +367,15 @@ public class HdfsClient {
 	}
 
 	public static void main(String[] args) throws IOException {
-
+		HdfsClient client = new HdfsClient();
+		client.setConf();
 		if (args.length < 1) {
-			printUsage();
+			//printUsage();
+			client.readDir("/user/cui");
 			System.exit(1);
 		}
 
-		HdfsClient client = new HdfsClient();
+		
 		if (args[0].equals("add")) {
 			if (args.length < 3) {
 				System.out.println("Usage: hdfsclient add <local_path> "
