@@ -1,10 +1,7 @@
 package com.gfk.hyperlane.uldtransfer;
 
 /*
-Feel free to use, copy and distribute this program in any form.
-HDFSClient.java
-https://linuxjunkies.wordpress.com/
-2011
+transfer uld data
  */
 
 import java.io.BufferedInputStream;
@@ -28,47 +25,34 @@ import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
 
 public class HdfsClient {
 
-	public void HdfsClient() {
+	public HdfsClient() {
 
 	}
+
 	Configuration conf = new Configuration();
-	
+
 	public static void printUsage() {
-		System.out
-				.println("Usage: hdfsclient add" + "<local_path> <hdfs_path>");
+		System.out.println("Usage: hdfsclient add" + "<local_path> <hdfs_path>");
 		System.out.println("Usage: hdfsclient read" + "<hdfs_path>");
 		System.out.println("Usage: hdfsclient delete" + "<hdfs_path>");
 		System.out.println("Usage: hdfsclient mkdir" + "<hdfs_path>");
-		System.out.println("Usage: hdfsclient copyfromlocal"
-				+ "<local_path> <hdfs_path>");
-		System.out.println("Usage: hdfsclient copytolocal"
-				+ " <hdfs_path> <local_path> ");
-		System.out
-				.println("Usage: hdfsclient modificationtime" + "<hdfs_path>");
-		System.out.println("Usage: hdfsclient getblocklocations"
-				+ "<hdfs_path>");
+		System.out.println("Usage: hdfsclient copyfromlocal" + "<local_path> <hdfs_path>");
+		System.out.println("Usage: hdfsclient copytolocal" + " <hdfs_path> <local_path> ");
+		System.out.println("Usage: hdfsclient modificationtime" + "<hdfs_path>");
+		System.out.println("Usage: hdfsclient getblocklocations" + "<hdfs_path>");
 		System.out.println("Usage: hdfsclient gethostnames");
 	}
 
 	public boolean ifExists(Path source) throws IOException {
 
-		Configuration config = new Configuration();
-		config.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
-		config.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
-		config.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
-
-		FileSystem hdfs = FileSystem.get(config);
+		FileSystem hdfs = FileSystem.get(conf);
 		boolean isExists = hdfs.exists(source);
 		return isExists;
 	}
 
 	public void getHostnames() throws IOException {
-		Configuration config = new Configuration();
-		config.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
-		config.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
-		config.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
-		FileSystem fs = FileSystem.get(config);
+		FileSystem fs = FileSystem.get(conf);
 		DistributedFileSystem hdfs = (DistributedFileSystem) fs;
 		DatanodeInfo[] dataNodeStats = hdfs.getDataNodeStats();
 
@@ -81,11 +65,6 @@ public class HdfsClient {
 
 	public void getBlockLocations(String source) throws IOException {
 
-		Configuration conf = new Configuration();
-		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
-
 		FileSystem fileSystem = FileSystem.get(conf);
 		Path srcPath = new Path(source);
 
@@ -95,13 +74,11 @@ public class HdfsClient {
 			return;
 		}
 		// Get the filename out of the file path
-		String filename = source.substring(source.lastIndexOf('/') + 1,
-				source.length());
+		String filename = source.substring(source.lastIndexOf('/') + 1, source.length());
 
 		FileStatus fileStatus = fileSystem.getFileStatus(srcPath);
 
-		BlockLocation[] blkLocations = fileSystem.getFileBlockLocations(
-				fileStatus, 0, fileStatus.getLen());
+		BlockLocation[] blkLocations = fileSystem.getFileBlockLocations(fileStatus, 0, fileStatus.getLen());
 		int blkCount = blkLocations.length;
 
 		System.out.println("File :" + filename + "stored at:");
@@ -113,11 +90,7 @@ public class HdfsClient {
 	}
 
 	public void getModificationTime(String source) throws IOException {
-
-		Configuration conf = new Configuration();
-		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
+		;
 
 		FileSystem fileSystem = FileSystem.get(conf);
 		Path srcPath = new Path(source);
@@ -128,23 +101,23 @@ public class HdfsClient {
 			return;
 		}
 		// Get the filename out of the file path
-		String filename = source.substring(source.lastIndexOf('/') + 1,
-				source.length());
+		String filename = source.substring(source.lastIndexOf('/') + 1, source.length());
 
 		FileStatus fileStatus = fileSystem.getFileStatus(srcPath);
 		long modificationTime = fileStatus.getModificationTime();
 
-		System.out.format("File %s; Modification time : %0.2f %n", filename,
-				modificationTime);
+		System.out.format("File %s; Modification time : %0.2f %n", filename, modificationTime);
 
 	}
 
+	/* import to hdfs 
+	 * the target is defined as 
+	 * meter_type_name/slice_start, slice_year, slice_month, slice_day,
+	 */
+	public void copyFromLocal() throws IOException {
+		
+	}
 	public void copyFromLocal(String source, String dest) throws IOException {
-
-		Configuration conf = new Configuration();
-		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fileSystem = FileSystem.get(conf);
 		Path srcPath = new Path(source);
@@ -157,8 +130,7 @@ public class HdfsClient {
 		}
 
 		// Get the filename out of the file path
-		String filename = source.substring(source.lastIndexOf('/') + 1,
-				source.length());
+		String filename = source.substring(source.lastIndexOf('/') + 1, source.length());
 
 		try {
 			fileSystem.copyFromLocalFile(srcPath, dstPath);
@@ -171,12 +143,32 @@ public class HdfsClient {
 		}
 	}
 
+	/*
+	 * export the uld to  local file for transfer
+	 * the source directory is 
+	 * meter_type_name=[meter_type_name]/
+	 * type_name=[type_name]/
+	 * start_date=[yyyy-MM-dd]/
+	 * transaction_timestamp=[transaction_timestamp]
+	 * the target is defined as 
+	 * meter_type_name/slice_start, slice_year, slice_month, slice_day,
+	 */
+	public void copyToLocal(String rootInput) throws IOException {
+		
+		FileSystem fileSystem = FileSystem.get(conf);
+		FileStatus[] meter_type_name = fileSystem.listStatus(new Path(rootInput));
+		for (int i = 0; i < meter_type_name.length; i++) {
+			System.out.println("File " + meter_type_name[i] + "");
+			if(meter_type_name[i].isDirectory()){
+				FileStatus[] type_name = fileSystem.listStatus(new Path(rootInput));
+				for (int j = 0; j < type_name.length; j++) {
+					
+				}
+			};
+		}
+		
+	}
 	public void copyToLocal(String source, String dest) throws IOException {
-
-		Configuration conf = new Configuration();
-		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fileSystem = FileSystem.get(conf);
 		Path srcPath = new Path(source);
@@ -189,8 +181,7 @@ public class HdfsClient {
 		}
 
 		// Get the filename out of the file path
-		String filename = source.substring(source.lastIndexOf('/') + 1,
-				source.length());
+		String filename = source.substring(source.lastIndexOf('/') + 1, source.length());
 
 		try {
 			fileSystem.copyToLocalFile(srcPath, dstPath);
@@ -204,10 +195,6 @@ public class HdfsClient {
 	}
 
 	public void renameFile(String fromthis, String tothis) throws IOException {
-		Configuration conf = new Configuration();
-		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 		FileSystem fileSystem = FileSystem.get(conf);
 		Path fromPath = new Path(fromthis);
@@ -239,17 +226,10 @@ public class HdfsClient {
 
 	public void addFile(String source, String dest) throws IOException {
 
-		// Conf object will read the HDFS configuration parameters
-		Configuration conf = new Configuration();
-		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
-
 		FileSystem fileSystem = FileSystem.get(conf);
 
 		// Get the filename out of the file path
-		String filename = source.substring(source.lastIndexOf('/') + 1,
-				source.length());
+		String filename = source.substring(source.lastIndexOf('/') + 1, source.length());
 
 		// Create the destination path including the filename.
 		if (dest.charAt(dest.length() - 1) != '/') {
@@ -267,8 +247,7 @@ public class HdfsClient {
 
 		// Create a new file and write data to it.
 		FSDataOutputStream out = fileSystem.create(path);
-		InputStream in = new BufferedInputStream(new FileInputStream(new File(
-				source)));
+		InputStream in = new BufferedInputStream(new FileInputStream(new File(source)));
 
 		byte[] b = new byte[1024];
 		int numBytes = 0;
@@ -281,6 +260,7 @@ public class HdfsClient {
 		out.close();
 		fileSystem.close();
 	}
+
 	public void readDir(String file) throws IOException {
 		FileSystem fileSystem = FileSystem.get(conf);
 		FileStatus[] dir = fileSystem.listStatus(new Path(file));
@@ -288,19 +268,17 @@ public class HdfsClient {
 			System.out.println("File " + dir[i] + " does not exists");
 		}
 	}
+
 	public void setConf() throws IOException {
-		
+
 		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
 		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
 		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
 	}
-	public void readFile(String file) throws IOException {
-		Configuration conf = new Configuration();
-		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 
+	public void readFile(String file) throws IOException {
+		 
 		FileSystem fileSystem = FileSystem.get(conf);
 
 		Path path = new Path(file);
@@ -311,11 +289,9 @@ public class HdfsClient {
 
 		FSDataInputStream in = fileSystem.open(path);
 
-		String filename = file.substring(file.lastIndexOf('/') + 1,
-				file.length());
+		String filename = file.substring(file.lastIndexOf('/') + 1, file.length());
 
-		OutputStream out = new BufferedOutputStream(new FileOutputStream(
-				new File(filename)));
+		OutputStream out = new BufferedOutputStream(new FileOutputStream(new File(filename)));
 
 		byte[] b = new byte[1024];
 		int numBytes = 0;
@@ -328,11 +304,7 @@ public class HdfsClient {
 		fileSystem.close();
 	}
 
-	public void deleteFile(String file) throws IOException {
-		Configuration conf = new Configuration();
-		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
+	public void deleteFile(String file) throws IOException { 
 
 		FileSystem fileSystem = FileSystem.get(conf);
 
@@ -348,11 +320,7 @@ public class HdfsClient {
 	}
 
 	public void mkdir(String dir) throws IOException {
-		Configuration conf = new Configuration();
-		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
-
+	 
 		FileSystem fileSystem = FileSystem.get(conf);
 
 		Path path = new Path(dir);
@@ -370,16 +338,14 @@ public class HdfsClient {
 		HdfsClient client = new HdfsClient();
 		client.setConf();
 		if (args.length < 1) {
-			//printUsage();
+			// printUsage();
 			client.readDir("/user/cui");
 			System.exit(1);
 		}
 
-		
 		if (args[0].equals("add")) {
 			if (args.length < 3) {
-				System.out.println("Usage: hdfsclient add <local_path> "
-						+ "<hdfs_path>");
+				System.out.println("Usage: hdfsclient add <local_path> " + "<hdfs_path>");
 				System.exit(1);
 			}
 			client.addFile(args[1], args[2]);
@@ -407,40 +373,35 @@ public class HdfsClient {
 			client.mkdir(args[1]);
 		} else if (args[0].equals("copyfromlocal")) {
 			if (args.length < 3) {
-				System.out
-						.println("Usage: hdfsclient copyfromlocal <from_local_path> <to_hdfs_path>");
+				System.out.println("Usage: hdfsclient copyfromlocal <from_local_path> <to_hdfs_path>");
 				System.exit(1);
 			}
 
 			client.copyFromLocal(args[1], args[2]);
 		} else if (args[0].equals("rename")) {
 			if (args.length < 3) {
-				System.out
-						.println("Usage: hdfsclient rename <old_hdfs_path> <new_hdfs_path>");
+				System.out.println("Usage: hdfsclient rename <old_hdfs_path> <new_hdfs_path>");
 				System.exit(1);
 			}
 
 			client.renameFile(args[1], args[2]);
 		} else if (args[0].equals("copytolocal")) {
 			if (args.length < 3) {
-				System.out
-						.println("Usage: hdfsclient copytolocal <from_hdfs_path> <to_local_path>");
+				System.out.println("Usage: hdfsclient copytolocal <from_hdfs_path> <to_local_path>");
 				System.exit(1);
 			}
 
 			client.copyToLocal(args[1], args[2]);
 		} else if (args[0].equals("modificationtime")) {
 			if (args.length < 2) {
-				System.out
-						.println("Usage: hdfsclient modificationtime <hdfs_path>");
+				System.out.println("Usage: hdfsclient modificationtime <hdfs_path>");
 				System.exit(1);
 			}
 
 			client.getModificationTime(args[1]);
 		} else if (args[0].equals("getblocklocations")) {
 			if (args.length < 2) {
-				System.out
-						.println("Usage: hdfsclient getblocklocations <hdfs_path>");
+				System.out.println("Usage: hdfsclient getblocklocations <hdfs_path>");
 				System.exit(1);
 			}
 
