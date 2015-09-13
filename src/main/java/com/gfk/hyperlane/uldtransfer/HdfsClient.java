@@ -375,9 +375,9 @@ public class HdfsClient {
 		client.setConf();
 		if (args.length < 1) {
 			// printUsage();
-			client.rootInput="/user/cui";
-			client.rootInput="/var/cui";
-			client.readDir("");
+			client.rootInput="/user/cui/uld_id__e5defea7c853232";
+			client.rootOutput="/var/cui";
+			client.copyToLocal();
 			System.exit(1);
 		}
 
