@@ -37,19 +37,14 @@ public class HdfsClient {
 	String rootOutput;
 
 	public static void printUsage() {
-		System.out
-				.println("Usage: hdfsclient add" + "<local_path> <hdfs_path>");
+		System.out.println("Usage: hdfsclient add" + "<local_path> <hdfs_path>");
 		System.out.println("Usage: hdfsclient read" + "<hdfs_path>");
 		System.out.println("Usage: hdfsclient delete" + "<hdfs_path>");
 		System.out.println("Usage: hdfsclient mkdir" + "<hdfs_path>");
-		System.out.println("Usage: hdfsclient copyfromlocal"
-				+ "<local_path> <hdfs_path>");
-		System.out.println("Usage: hdfsclient copytolocal"
-				+ " <hdfs_path> <local_path> ");
-		System.out
-				.println("Usage: hdfsclient modificationtime" + "<hdfs_path>");
-		System.out.println("Usage: hdfsclient getblocklocations"
-				+ "<hdfs_path>");
+		System.out.println("Usage: hdfsclient copyfromlocal" + "<local_path> <hdfs_path>");
+		System.out.println("Usage: hdfsclient copytolocal" + " <hdfs_path> <local_path> ");
+		System.out.println("Usage: hdfsclient modificationtime" + "<hdfs_path>");
+		System.out.println("Usage: hdfsclient getblocklocations" + "<hdfs_path>");
 		System.out.println("Usage: hdfsclient gethostnames");
 	}
 
@@ -84,13 +79,11 @@ public class HdfsClient {
 			return;
 		}
 		// Get the filename out of the file path
-		String filename = source.substring(source.lastIndexOf('/') + 1,
-				source.length());
+		String filename = source.substring(source.lastIndexOf('/') + 1, source.length());
 
 		FileStatus fileStatus = fileSystem.getFileStatus(srcPath);
 
-		BlockLocation[] blkLocations = fileSystem.getFileBlockLocations(
-				fileStatus, 0, fileStatus.getLen());
+		BlockLocation[] blkLocations = fileSystem.getFileBlockLocations(fileStatus, 0, fileStatus.getLen());
 		int blkCount = blkLocations.length;
 
 		LOG.debug("File :" + filename + "stored at:");
@@ -113,14 +106,12 @@ public class HdfsClient {
 			return;
 		}
 		// Get the filename out of the file path
-		String filename = source.substring(source.lastIndexOf('/') + 1,
-				source.length());
+		String filename = source.substring(source.lastIndexOf('/') + 1, source.length());
 
 		FileStatus fileStatus = fileSystem.getFileStatus(srcPath);
 		long modificationTime = fileStatus.getModificationTime();
 
-		System.out.format("File %s; Modification time : %0.2f %n", filename,
-				modificationTime);
+		System.out.format("File %s; Modification time : %0.2f %n", filename, modificationTime);
 
 	}
 
@@ -145,8 +136,7 @@ public class HdfsClient {
 		}
 
 		// Get the filename out of the file path
-		String filename = source.substring(source.lastIndexOf('/') + 1,
-				source.length());
+		String filename = source.substring(source.lastIndexOf('/') + 1, source.length());
 
 		try {
 			fileSystem.copyFromLocalFile(srcPath, dstPath);
@@ -169,40 +159,54 @@ public class HdfsClient {
 	public void copyToLocal() throws IOException {
 
 		FileSystem fileSystem = FileSystem.get(conf);
-		FileStatus[] meter_type_name = fileSystem
-				.listStatus(new Path(rootInput));
-		for (int i = 0; i < meter_type_name.length; i++) {
-			// LOG.debug("File " + meter_type_name[i] + "");
-			if (meter_type_name[i].isDirectory()) {
-				FileStatus[] type_name = fileSystem
-						.listStatus(meter_type_name[i].getPath());
-				for (int j = 0; j < type_name.length; j++) {
-					if (type_name[j].isDirectory()) {
-						FileStatus[] start_date = fileSystem
-								.listStatus(type_name[j].getPath());
-						for (int k = 0; k < start_date.length; k++) {
-							if (start_date[k].isDirectory()) {
-								FileStatus[] transaction_timestamp = fileSystem
-										.listStatus(start_date[k].getPath());
-								for (int h = 0; h < transaction_timestamp.length; h++) {
-									copyToLocal(transaction_timestamp[h],
-											start_date[k]);
+		try {
+			FileStatus[] meter_type_name = fileSystem.listStatus(new Path(rootInput));
+			for (int i = 0; i < meter_type_name.length; i++) {
+				// LOG.debug("File " + meter_type_name[i] + "");
+				if (meter_type_name[i].isDirectory()) {
+					FileStatus[] type_name = fileSystem.listStatus(meter_type_name[i].getPath());
+					for (int j = 0; j < type_name.length; j++) {
+						if (type_name[j].isDirectory()) {
+							FileStatus[] start_date = fileSystem.listStatus(type_name[j].getPath());
+							for (int k = 0; k < start_date.length; k++) {
+								if (start_date[k].isDirectory()) {
+									FileStatus[] transaction_timestamp = fileSystem.listStatus(start_date[k].getPath());
+									for (int h = 0; h < transaction_timestamp.length; h++) {
+										if (transaction_timestamp[h].isDirectory()) {
+											FileStatus[] lo = fileSystem.listStatus(transaction_timestamp[h].getPath());
+											copyToLocal(lo[0], start_date[k]);
+										} else {
+											copyToLocal(transaction_timestamp[h], start_date[k]);
+										}
+									}
 								}
 							}
 						}
 					}
 				}
+				;
 			}
-			;
+		} finally {
+			fileSystem.close();
 		}
-
 	}
 
-	private void copyToLocal(FileStatus source, FileStatus start_date)
-			throws IOException {
-		
-		Path targetDir = new Path(rootOutput+ "/"+start_date.getPath().getName());
-		copyToLocal(source.getPath(), targetDir );
+	private void copyToLocal(FileStatus source, FileStatus start_date) throws IOException {
+		String d = rootOutput + "/" + start_date.getPath().getName();
+		File local = new File(d);
+		if (!local.exists()) {
+			local.mkdirs();
+		}
+		FileSystem fileSystem = FileSystem.get(conf);
+		Path targetDir = new Path(d);
+		if (source.isDirectory()) {
+			FileStatus[] l = fileSystem.listStatus(source.getPath());
+			for (int h = 0; h < l.length; h++) {
+				copyToLocal(l[h].getPath(), targetDir);
+			}
+		} else {
+			copyToLocal(source.getPath(), targetDir);
+		}
 	}
 
 	public void copyToLocal(Path srcPath, Path dstPath) throws IOException {
@@ -221,8 +225,6 @@ public class HdfsClient {
 		} catch (Exception e) {
 			System.err.println("Exception caught! :" + e);
 			System.exit(1);
-		} finally {
-			fileSystem.close();
 		}
 	}
 
@@ -261,8 +263,7 @@ public class HdfsClient {
 		FileSystem fileSystem = FileSystem.get(conf);
 
 		// Get the filename out of the file path
-		String filename = source.substring(source.lastIndexOf('/') + 1,
-				source.length());
+		String filename = source.substring(source.lastIndexOf('/') + 1, source.length());
 
 		// Create the destination path including the filename.
 		if (dest.charAt(dest.length() - 1) != '/') {
@@ -280,8 +281,7 @@ public class HdfsClient {
 
 		// Create a new file and write data to it.
 		FSDataOutputStream out = fileSystem.create(path);
-		InputStream in = new BufferedInputStream(new FileInputStream(new File(
-				source)));
+		InputStream in = new BufferedInputStream(new FileInputStream(new File(source)));
 
 		byte[] b = new byte[1024];
 		int numBytes = 0;
@@ -323,11 +323,9 @@ public class HdfsClient {
 
 		FSDataInputStream in = fileSystem.open(path);
 
-		String filename = file.substring(file.lastIndexOf('/') + 1,
-				file.length());
+		String filename = file.substring(file.lastIndexOf('/') + 1, file.length());
 
-		OutputStream out = new BufferedOutputStream(new FileOutputStream(
-				new File(filename)));
+		OutputStream out = new BufferedOutputStream(new FileOutputStream(new File(filename)));
 
 		byte[] b = new byte[1024];
 		int numBytes = 0;
@@ -375,16 +373,15 @@ public class HdfsClient {
 		client.setConf();
 		if (args.length < 1) {
 			// printUsage();
-			client.rootInput="/user/cui/uld_id__e5defea7c853232";
-			client.rootOutput="/var/cui";
+			client.rootInput = "/user/cui/uld_id__e5defea7c853232";
+			client.rootOutput = "/var/cui";
 			client.copyToLocal();
 			System.exit(1);
 		}
 
 		if (args[0].equals("add")) {
 			if (args.length < 3) {
-				System.out.println("Usage: hdfsclient add <local_path> "
-						+ "<hdfs_path>");
+				System.out.println("Usage: hdfsclient add <local_path> " + "<hdfs_path>");
 				System.exit(1);
 			}
 			client.addFile(args[1], args[2]);
@@ -412,40 +409,35 @@ public class HdfsClient {
 			client.mkdir(args[1]);
 		} else if (args[0].equals("copyfromlocal")) {
 			if (args.length < 3) {
-				System.out
-						.println("Usage: hdfsclient copyfromlocal <from_local_path> <to_hdfs_path>");
+				System.out.println("Usage: hdfsclient copyfromlocal <from_local_path> <to_hdfs_path>");
 				System.exit(1);
 			}
 
 			client.copyFromLocal(args[1], args[2]);
 		} else if (args[0].equals("rename")) {
 			if (args.length < 3) {
-				System.out
-						.println("Usage: hdfsclient rename <old_hdfs_path> <new_hdfs_path>");
+				System.out.println("Usage: hdfsclient rename <old_hdfs_path> <new_hdfs_path>");
 				System.exit(1);
 			}
 
 			client.renameFile(args[1], args[2]);
 		} else if (args[0].equals("copytolocal")) {
 			if (args.length < 3) {
-				System.out
-						.println("Usage: hdfsclient copytolocal <from_hdfs_path> <to_local_path>");
+				System.out.println("Usage: hdfsclient copytolocal <from_hdfs_path> <to_local_path>");
 				System.exit(1);
 			}
 
 			client.copyToLocal(new Path(args[1]), new Path(args[2]));
 		} else if (args[0].equals("modificationtime")) {
 			if (args.length < 2) {
-				System.out
-						.println("Usage: hdfsclient modificationtime <hdfs_path>");
+				System.out.println("Usage: hdfsclient modificationtime <hdfs_path>");
 				System.exit(1);
 			}
 
 			client.getModificationTime(args[1]);
 		} else if (args[0].equals("getblocklocations")) {
 			if (args.length < 2) {
-				System.out
-						.println("Usage: hdfsclient getblocklocations <hdfs_path>");
+				System.out.println("Usage: hdfsclient getblocklocations <hdfs_path>");
 				System.exit(1);
 			}
 
