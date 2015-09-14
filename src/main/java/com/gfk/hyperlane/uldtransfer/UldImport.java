@@ -7,13 +7,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
+import org.apache.oozie.client.WorkflowJob;
 
 public class UldImport extends HdfsClient {
 
 	private final Log LOG = LogFactory.getLog(getClass().getName());
 
 	public static void main(String[] args) throws IOException,
-			OozieClientException {
+			OozieClientException, InterruptedException {
 		UldImport client = new UldImport();
 		client.setConf();
 
@@ -25,7 +26,8 @@ public class UldImport extends HdfsClient {
 		System.exit(1);
 	}
 
-	public void job(String[] args) throws OozieClientException {
+	public void job(String[] args) throws OozieClientException,
+			InterruptedException {
 
 		// get a OozieClient for local Oozie
 		OozieClient wc = new OozieClient("http://vm-cmv-05:11000/oozie");
@@ -61,7 +63,7 @@ public class UldImport extends HdfsClient {
 		conf.setProperty(OozieClient.APP_PATH,
 				"/user/hyperlane/engines/generic-import/0.2.6-helmut/workflow.xml");
 
-		conf.setProperty("input_root",rootOutput);
+		conf.setProperty("input_root", rootOutput);
 		conf.setProperty("input_data_path_1", "start_date=2015-01-26");
 		conf.setProperty("input_schema_path_1", "/user/cui/uld.avsc");
 		conf.setProperty("input_type", "avro");
@@ -82,10 +84,11 @@ public class UldImport extends HdfsClient {
 
 		// wait until the workflow job finishes printing the status every 10
 		// seconds
-		// while (wc.getJobInfo(jobId).getStatus() == Workflow.Status.RUNNING) {
-		// System.out.println("Workflow job running ...");
-		// Thread.sleep(10 * 1000);
-		// }
+		while (wc.getJobInfo(jobId).getStatus() == WorkflowJob.Status.RUNNING) {
+			System.out.println("Workflow job running ..."
+					+ wc.getJobInfo(jobId));
+			Thread.sleep(10 * 1000);
+		}
 
 		// print the final status o the workflow job
 		// System.out.println("Workflow job completed ...");

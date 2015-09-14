@@ -32,7 +32,8 @@ public class HdfsClient {
 	FileSystem fileSystem;
 	public String rootInput;
 	public String rootOutput;
-
+	public String  last_transaction_timestamp;
+	
 	public boolean ifExists(Path source) throws IOException {
 
 		FileSystem hdfs = FileSystem.get(conf);
