@@ -21,7 +21,7 @@ public class UldImport extends HdfsClient {
 		// printUsage();
 		client.rootInput = "/var/cui";
 		client.rootOutput = "/user/cui/uld";
-		client.copyFromLocal();
+		// client.copyFromLocal();
 		client.job(args);
 		System.exit(1);
 	}
