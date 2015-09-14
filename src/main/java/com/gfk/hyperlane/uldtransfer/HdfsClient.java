@@ -32,7 +32,7 @@ public class HdfsClient {
 	FileSystem fileSystem;
 	public String rootInput;
 	public String rootOutput;
- 
+
 	public boolean ifExists(Path source) throws IOException {
 
 		FileSystem hdfs = FileSystem.get(conf);
@@ -55,7 +55,6 @@ public class HdfsClient {
 
 	public void getBlockLocations(String source) throws IOException {
 
-		
 		Path srcPath = new Path(source);
 
 		// Check if the file already exists
@@ -83,7 +82,6 @@ public class HdfsClient {
 
 	public void getModificationTime(String source) throws IOException {
 
-		
 		Path srcPath = new Path(source);
 
 		// Check if the file already exists
@@ -104,35 +102,6 @@ public class HdfsClient {
 	}
 
 	/*
-	 * import to hdfs the target is defined as meter_type_name/slice_start,
-	 * slice_year, slice_month, slice_day,
-	 */
-	public void copyFromLocal() throws IOException {
-
-	}
-
-	public void copyFromLocal(String source, String dest) throws IOException {
-
-		
-		Path srcPath = new Path(source);
-
-		Path dstPath = new Path(dest);
-		// Check if the file already exists
-		if (!(fileSystem.exists(dstPath))) {
-			LOG.debug("No such destination " + dstPath);
-			return;
-		}
-
-		// Get the filename out of the file path
-		String filename = source.substring(source.lastIndexOf('/') + 1,
-				source.length());
-
-		fileSystem.copyFromLocalFile(srcPath, dstPath);
-		LOG.debug("File " + filename + "copied to " + dest);
-
-	}
-
-	/*
 	 * export the uld to local file for transfer the source directory is
 	 * meter_type_name=[meter_type_name]/ type_name=[type_name]/
 	 * start_date=[yyyy-MM-dd]/ transaction_timestamp=[transaction_timestamp]
@@ -141,7 +110,6 @@ public class HdfsClient {
 	 */
 	public void copyToLocal() throws IOException {
 
-		
 		try {
 			FileStatus[] meter_type_name = fileSystem.listStatus(new Path(
 					rootInput));
@@ -190,7 +158,7 @@ public class HdfsClient {
 		if (!local.exists()) {
 			local.mkdirs();
 		}
-		
+
 		Path targetDir = new Path(d);
 		if (source.isDirectory()) {
 			FileStatus[] l = fileSystem.listStatus(source.getPath());
@@ -203,9 +171,6 @@ public class HdfsClient {
 	}
 
 	public void copyToLocal(Path srcPath, Path dstPath) throws IOException {
-
-		
-
 		// Check if the file already exists
 		if (!(fileSystem.exists(srcPath))) {
 			LOG.debug("No such destination " + srcPath);
@@ -214,12 +179,44 @@ public class HdfsClient {
 
 		fileSystem.copyToLocalFile(srcPath, dstPath);
 		LOG.debug("File " + srcPath + "copied to " + dstPath);
+	}
+
+	/*
+	 * import to hdfs the target is defined as meter_type_name/slice_start,
+	 * slice_year, slice_month, slice_day,
+	 */
+	public void copyFromLocal() throws IOException {
+
+		Path path = new Path(rootOutput);
+		if (fileSystem.exists(path)) {
+			LOG.debug("Dir " + rootOutput + " already exists!");
+		} else {
+			fileSystem.mkdirs(path);
+		}
+		File local = new File(rootInput);
+
+		if (local.isDirectory()) {
+			for (final File fileEntry : local.listFiles()) {
+				copyFromLocal(new Path(fileEntry.getPath()), path);
+			}
+
+		}
+	}
+
+	public void copyFromLocal(Path srcPath, Path dstPath) throws IOException {
+
+		// Check if the file already exists
+		if (!(fileSystem.exists(dstPath))) {
+			LOG.debug("No such destination " + dstPath);
+			return;
+		} 
+		fileSystem.copyFromLocalFile(srcPath, dstPath);
+		LOG.debug("File " + srcPath + "copied to " + dstPath);
 
 	}
 
 	public void renameFile(String fromthis, String tothis) throws IOException {
 
-		
 		Path fromPath = new Path(fromthis);
 		Path toPath = new Path(tothis);
 
@@ -241,8 +238,6 @@ public class HdfsClient {
 	}
 
 	public void addFile(String source, String dest) throws IOException {
-
-		
 
 		// Get the filename out of the file path
 		String filename = source.substring(source.lastIndexOf('/') + 1,
@@ -276,11 +271,11 @@ public class HdfsClient {
 		// Close all the file descripters
 		in.close();
 		out.close();
-	 
+
 	}
 
 	public void readDir(String file) throws IOException {
-		
+
 		FileStatus[] dir = fileSystem.listStatus(new Path(file));
 		for (int i = 0; i < dir.length; i++) {
 			LOG.debug("File " + dir[i] + " does not exists");
@@ -295,7 +290,7 @@ public class HdfsClient {
 		fileSystem = FileSystem.get(conf);
 	}
 
-	public void readFile(String file) throws IOException { 
+	public void readFile(String file) throws IOException {
 
 		Path path = new Path(file);
 		if (!fileSystem.exists(path)) {
@@ -319,10 +314,10 @@ public class HdfsClient {
 
 		in.close();
 		out.close();
-	 
+
 	}
 
-	public void deleteFile(String file) throws IOException { 
+	public void deleteFile(String file) throws IOException {
 
 		Path path = new Path(file);
 		if (!fileSystem.exists(path)) {
@@ -332,10 +327,9 @@ public class HdfsClient {
 
 		fileSystem.delete(new Path(file), true);
 
-	 
 	}
 
-	public void mkdir(String dir) throws IOException { 
+	public void mkdir(String dir) throws IOException {
 
 		Path path = new Path(dir);
 		if (fileSystem.exists(path)) {
@@ -344,7 +338,7 @@ public class HdfsClient {
 		}
 
 		fileSystem.mkdirs(path);
- 
+
 	}
 
 }
