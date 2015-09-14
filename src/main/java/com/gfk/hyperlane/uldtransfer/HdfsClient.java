@@ -289,6 +289,7 @@ public class HdfsClient {
 		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
 		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
 		fileSystem = FileSystem.get(conf);
+		System.setProperty("HADOOP_USER_NAME", "hdfs");
 	}
 
 	public void readFile(String file) throws IOException {
