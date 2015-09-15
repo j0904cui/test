@@ -157,19 +157,18 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.3</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/jar-with-dependencies.xml</descriptor>
+					</descriptors>
+				</configuration>
 				<executions>
 					<execution>
-
-						<configuration>
-							<descriptorRefs>
-								<descriptorRef>jar-with-dependencies</descriptorRef>
-							</descriptorRefs>
-							<archive>
-								<manifest>
-									<mainClass>com.gfk.hyperlane.uldtransfer.UldImport</mainClass>
-								</manifest>
-							</archive>
-						</configuration>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
