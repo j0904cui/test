@@ -161,6 +161,11 @@
 					<descriptors>
 						<descriptor>src/main/assembly/jar-with-dependencies.xml</descriptor>
 					</descriptors>
+					<archive>
+						<manifest>
+							<mainClass>com.gfk.hyperlane.uldtransfer.UldImport</mainClass>
+						</manifest>
+					</archive>
 				</configuration>
 				<executions>
 					<execution>
