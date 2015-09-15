@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,6 +34,9 @@ public class HdfsClient {
 	public String rootInput;
 	public String rootOutput;
 	public String  last_transaction_timestamp;
+	
+	//slice_year=2015,slice_month=01,slice_day=26,slice_start=2015-01-26;
+	public Date  slice_start;
 	
 	public boolean ifExists(Path source) throws IOException {
 
