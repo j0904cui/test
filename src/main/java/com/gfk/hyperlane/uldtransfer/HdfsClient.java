@@ -288,10 +288,14 @@ public class HdfsClient {
 	}
 
 	public void setConf() throws IOException {
-
-		conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/hdfs-site.xml"));
-		conf.addResource(new Path("/etc/hadoop/conf/mapred-site.xml"));
+		setConf("/etc/hadoop/conf/");
+	}
+		 
+	public void setConf(String p) throws IOException {
+ 
+		conf.addResource(new Path(p+"core-site.xml"));
+		conf.addResource(new Path(p+"hdfs-site.xml"));
+		conf.addResource(new Path(p+"mapred-site.xml"));
 		fileSystem = FileSystem.get(conf);
 		System.setProperty("HADOOP_USER_NAME", "hdfs");
 		conf.set("fs.hdfs.impl", org.apache.hadoop.hdfs.DistributedFileSystem.class.getName());
